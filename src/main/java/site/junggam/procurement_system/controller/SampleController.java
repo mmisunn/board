@@ -6,13 +6,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @Log4j2
-@RequestMapping("/sample")
+@RequestMapping("/")
 public class SampleController {
     
-    @RequestMapping("/logintest")
+    @RequestMapping("sample/logintest")
     public void logintest(){
         log.info("테스트하면서 로그포제이도 테스트");
         System.out.println("테스트하면서 시스아웃도 테스트");
+    }
+
+    @RequestMapping("layout/basic")
+    public void basic(){
+
     }
 
 }
