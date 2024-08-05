@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <th:block th:replace="~{/fragments/headFragment::head}"></th:block>
+</head>
+<body>
+    <th:block th:replace="~{/fragments/bodyFragment::header}"></th:block>
+    <th:block th:replace="~{/fragments/bodyFragment::sidebar}"></th:block>
+    <!-- ======= main ======= -->
+    <main id="main" class="main">
+        <div class="pagetitle">
+            <h1>발주상세보기</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">메인</a></li>
+                    <li class="breadcrumb-item">구매발주</li>
+                    <li class="breadcrumb-item">발주서</li>
+                    <li class="breadcrumb-item active">발주리스트</li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+
+        <section class="section dashboard">
+            <div class="row">
+                <!--★★★★★★★★★★카드내용★★★★★★★★★★★★-->
+                <div class="col-lg-6">
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">거래처정보</h5>
+                            <!-- General Form Elements -->
+                            <div class="row mb-3">
+                                <label for="inputText" class="col-sm-2 col-form-label">상호</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" value="A상사" disabled>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputText" class="col-sm-2 col-form-label">담당자</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" value="OOO 사장님" disabled>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputText" class="col-sm-2 col-form-label">전화</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" value="010-1234-5678" disabled>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputText" class="col-sm-2 col-form-label">팩스</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" value="-" disabled>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputText" class="col-sm-2 col-form-label">이메일</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" value="Aaa@aaa.com" disabled>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">자사정보</h5>
+                            <!-- General Form Elements -->
+                            <div class="row mb-3">
+                                <label for="inputText" class="col-sm-2 col-form-label">상호</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" value="정감" disabled>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputText" class="col-sm-2 col-form-label">담당자</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" value="OOO 부장" disabled>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputText" class="col-sm-2 col-form-label">전화</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" value="010-9876-5432" disabled>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputText" class="col-sm-2 col-form-label">팩스</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" value="-" disabled>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputText" class="col-sm-2 col-form-label">이메일</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" value="Mmm@mmm.com" disabled>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">거래내용</h5>
+                            <div class="row mb-3">
+                                <label for="inputText" class="col-sm-2 col-form-label">발주일자</label>
+                                <div class="col-sm-10">
+                                    <input type="date" class="form-control" value="2024-07-18">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputText" class="col-sm-2 col-form-label">납기일자</label>
+                                <div class="col-sm-10">
+                                    <input type="date" class="form-control" value="2024-08-05">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputText" class="col-sm-2 col-form-label">납품장소</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" value="경기도 수원시 어쩌구 저쩌구 1층 창고">
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="inputText" class="col-sm-2 col-form-label">품목명</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" value="펜대" disabled>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputText" class="col-sm-2 col-form-label">규격</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" value="황동/8cm" disabled>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputText" class="col-sm-2 col-form-label">수량</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" value="50">
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="inputPassword" class="col-sm-2 col-form-label">비고</label>
+                                <div class="col-sm-10">
+                    <textarea class="form-control"
+                              style="height: 100px">문의사항 발생시 언제든 연락부탁드립니다. 납기 전 담당자에게 연락 부타드립니다.</textarea>
+                                </div>
+                            </div>
+                            <div id="content">
+                                <button type="button" class="btn btn-primary" id="addHtmlBtn">검수계획추가</button>
+                                <button type="button" class="btn btn-primary">발주처리 및 다운로드</button>
+                                <button type="button" class="btn btn-primary">리스트</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!--여기에 카드랑 내용 넣어주시면 됩니다-->
+            </div>
+        </section>
+    </main>
+    <!-- End #main -->
+    <th:block th:replace="~{/fragments/bodyFragment::footer}"></th:block>
+    <th:block th:replace="~{/fragments/bodyFragment::js}"></th:block>
+</body>
+</html>
