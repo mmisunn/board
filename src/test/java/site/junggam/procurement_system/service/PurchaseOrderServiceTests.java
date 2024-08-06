@@ -1,0 +1,9 @@
+package site.junggam.procurement_system.service;
+
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+public class PurchaseOrderServiceTests {
+
+
+}

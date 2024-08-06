@@ -4,7 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,11 +12,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 @Getter
-@Table(name="tbl_order")
-public class Order {
+@Table(name="tbl_purchase_order")
+public class PurchaseOrder {
 
     @Id
-    private String orderCode;
-    private LocalDateTime orderDate;
-    private String order_memo;
+    private String purchaseOrderCode;
+    private LocalDateTime purchaseOrderDate;
+    private String purchaseOrderMemo;
+
 }
