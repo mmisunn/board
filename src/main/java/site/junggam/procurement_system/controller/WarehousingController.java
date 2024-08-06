@@ -20,15 +20,15 @@ public class WarehousingController {
     @RequestMapping("/warehousingread")
     public void warehousingread(){log.info("내용~");}
 
-    @GetMapping("/view/{fileId}")
-    public ResponseEntity<Resource> viewFileDetails(@PathVariable Long fileId) {
-        Resource file = fileService.loadFileAsResource(fileId);
-
-        @GetMapping("/view/{fileId}")
-    public ResponseEntity<Resource> viewFileDetails(@PathVariable Long fileId) {
-        Resource file = resource.loadFileAsResource(fileId);
-
-        return Warehousing.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + file.getFilename() + "\"")
-                .body(file);
+//    @GetMapping("/view/{fileId}")
+//    public ResponseEntity<Resource> viewFileDetails(@PathVariable Long fileId) {
+//        Resource file = fileService.loadFileAsResource(fileId);
+//
+//        @GetMapping("/view/{fileId}")
+//    public ResponseEntity<Resource> viewFileDetails(@PathVariable Long fileId) {
+//        Resource file = resource.loadFileAsResource(fileId);
+//
+//        return Warehousing.ok()
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + file.getFilename() + "\"")
+//                .body(file);
 }
