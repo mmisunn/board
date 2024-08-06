@@ -18,6 +18,8 @@ public class SampleController {
     @RequestMapping("layout/basic")
     public void basic(){
 
+
+
     }
 
 }
