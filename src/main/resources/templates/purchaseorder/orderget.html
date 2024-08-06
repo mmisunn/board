@@ -179,7 +179,16 @@
     <th:block th:replace="~{/fragments/bodyFragment::js}"></th:block>
     <!--내용 ajax처리를 위한 스크립트-->
     <script>
+        $(document).ready(function (e){
 
+            var purchaseOrderCode = [[${purchaseOrderCode}]];
+
+
+            function getPurchaseOrderContent(){
+                $.getJSON("/purchaseordercontent/"+purchaseOrderCode)
+                    console.log()
+            }
+        })
     </script>
 </body>
 </html>
