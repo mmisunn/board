@@ -1,9 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
     <title>Title</title>
-    <th:block th:replace="~{/fragments/headFragment::head}"></th:block>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <th:block th:replace="~{/fragments/headFragment}"></th:block>
 </head>
 <body>
     <th:block th:replace="~{/fragments/bodyFragment::header}"></th:block>
@@ -26,8 +31,7 @@
             <div class="row">
                 <!--★★★★★★★★★★카드내용★★★★★★★★★★★★-->
                 <!--여기에 카드랑 내용 넣어주시면 됩니다-->
-
-            </div>
+            </div> <!--End row-->
         </section>
     </main>
     <!-- End #main -->
