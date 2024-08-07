@@ -14,8 +14,7 @@ import java.time.LocalDateTime;
 @Table(name = "tbl_unit")
 public class Unit {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long unitCode;
+    private String unitCode;
     private String unitName;
     private String unitStand;
     private String unitTexture;

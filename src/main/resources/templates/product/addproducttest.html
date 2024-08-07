@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>제품 등록 테스트 페이지</title>
+</head>
+<body>
+<h3>제품 등록 테스트 페이지</h3>
+<hr />
+<form id="productForm">
+    <label for="productName">Product Name:</label>
+    <input type="text" id="productName" name="productName" required><br><br>
+    <label for="productPrice">Product Price:</label>
+    <input type="number" id="productPrice" name="productPrice" step="0.01" required><br><br>
+    <label for="productStand">Product Stand:</label>
+    <input type="text" id="productStand" name="productStand"><br><br>
+    <label for="productTexture">Product Texture:</label>
+    <input type="text" id="productTexture" name="productTexture"><br><br>
+    <label for="productDrawFile">Product Draw File:</label>
+    <input type="text" id="productDrawFile" name="productDrawFile"><br><br>
+    <label for="productEtcFile">Product Etc File:</label>
+    <input type="text" id="productEtcFile" name="productEtcFile"><br><br>
+    <button type="button" onclick="registerProduct()">Register Product</button>
+</form>
+
+<script>
+    async function registerProduct() {
+        const formData = new FormData(document.getElementById('productForm'));
+        const productDTO = {
+            productName: formData.get('productName'),
+            productPrice: parseFloat(formData.get('productPrice')),
+            productStand: formData.get('productStand'),
+            productTexture: formData.get('productTexture'),
+            productDrawFile: formData.get('productDrawFile'),
+            productEtcFile: formData.get('productEtcFile'),
+            productRegDate: new Date().toISOString(), // Current date-time
+            productModDate: new Date().toISOString()  // Current date-time
+        };
+
+        try {
+            const response = await fetch('/product/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(productDTO)
+            });
+            console.log("response : ",response);
+            if (response.ok) {
+                const result = await response.text();
+                alert(result);
+            } else {
+                alert('Failed to register product');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error occurred');
+        }
+    }
+</script>
+</body>
+</html>

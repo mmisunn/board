@@ -6,10 +6,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Log4j2
 @Controller
-@RequestMapping("/orderplan")
-public class OrderPlanController {
-    @RequestMapping("/productsample")
-    public void productsample() {
+@RequestMapping("/product")
+public class ProductController {
+    @RequestMapping("/productlist")
+    public void productlist() {
+
+    }
+
+    @RequestMapping("/addproducttest")
+    public void addproducttest() {
 
     }
 }

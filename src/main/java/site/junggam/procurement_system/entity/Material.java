@@ -15,8 +15,7 @@ import java.util.Set;
 @Table(name = "tbl_material")
 public class Material {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long materialCode;
+    private String materialCode;
     private String materialName;
     private String materialStand;
     private String materialTexture;
