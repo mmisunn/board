@@ -23,7 +23,7 @@ public class PurchaseOrderController {
     public void orderget(@RequestParam("purchaseOrderCode") String purchaseOrderCode, Model model){
         log.info("발주서 상세보기 컨트롤러");
         log.info("발주코드는 "+purchaseOrderCode);
-
+        model.addAttribute("purchaseOrderCode",purchaseOrderCode);
     }
 
 }

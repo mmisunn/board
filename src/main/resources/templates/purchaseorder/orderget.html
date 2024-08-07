@@ -1,9 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
     <title>Title</title>
-    <th:block th:replace="~{/fragments/headFragment::head}"></th:block>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <th:block th:replace="~{/fragments/headFragment}"></th:block>
 </head>
 <body>
     <th:block th:replace="~{/fragments/bodyFragment::header}"></th:block>
@@ -116,7 +121,7 @@
                                 <div class="row mb-3">
                                     <label for="inputText" class="col-sm-2 col-form-label">발주일자</label>
                                     <div class="col-sm-10">
-                                        <input type="date" class="form-control" value="2024-07-18">
+                                        <input type="date" class="form-control" id="purchaseOrderDate">
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -154,9 +159,7 @@
                                 <div class="row mb-3">
                                     <label for="inputText" class="col-sm-2 col-form-label">비고</label>
                                     <div class="col-sm-10">
-                                        <textarea class="form-control"style="height: 100px">
-                                            문의사항 발생시 언제든 연락부탁드립니다. 납기 전 담당자에게 연락 부타드립니다.
-                                        </textarea>
+                                        <textarea class="form-control" style="height: 100px" id="purchaseOrderMemo"></textarea>
                                     </div>
                                 </div>
                                 <div id="content">
@@ -168,27 +171,44 @@
                         </div>
                     </form>
                 </div>
-
-
                 <!--여기에 카드랑 내용 넣어주시면 됩니다-->
-            </div>
+            </div> <!--End row-->
         </section>
     </main>
-    <!-- End #main -->
-    <th:block th:replace="~{/fragments/bodyFragment::footer}"></th:block>
-    <th:block th:replace="~{/fragments/bodyFragment::js}"></th:block>
-    <!--내용 ajax처리를 위한 스크립트-->
-    <script>
-        $(document).ready(function (e){
+    <script th:inline="javascript">
+        $(document).ready(function (e) {
 
             var purchaseOrderCode = [[${purchaseOrderCode}]];
 
-
-            function getPurchaseOrderContent(){
-                $.getJSON("/purchaseordercontent/"+purchaseOrderCode)
-                    console.log()
+            function getPurchaseOrderContent() {
+                $.getJSON("/purchaseordercontent/" + purchaseOrderCode, function(data) {
+                    console.log("발주코드", purchaseOrderCode);
+                    console.log("응답 데이터", data);
+                    var purchaseOrderMemo = data.purchaseOrderMemo;
+                    var purchaseOrderDate = data.purchaseOrderDate.substring(0,10);
+                    console.log("발주비고", purchaseOrderMemo);
+                    console.log("발주날짜", purchaseOrderDate);
+                    $('#purchaseOrderMemo').val(purchaseOrderMemo);
+                    $('#purchaseOrderDate').val(purchaseOrderDate);
+                    if (data.procurementPlan) {
+                        var procurementPlanQuantity = data.procurementPlan.procurementPlanQuantity;
+                        console.log("조달계획 양", procurementPlanQuantity);
+                        $('#procurementPlanQuantity').text(procurementPlanQuantity);
+                    } else {
+                        console.log("조달계획 정보가 없습니다.");
+                        $('#procurementPlanQuantity').text("N/A");
+                    }
+                }).fail(function(jqxhr, textStatus, error) {
+                    var err = textStatus + ", " + error;
+                    console.log("요청 실패: " + err);
+                });
             }
-        })
+            // 함수 호출
+            getPurchaseOrderContent();
+        });
     </script>
+    <!-- End #main -->
+    <th:block th:replace="~{/fragments/bodyFragment::footer}"></th:block>
+    <th:block th:replace="~{/fragments/bodyFragment::js}"></th:block>
 </body>
 </html>
