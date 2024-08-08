@@ -127,7 +127,7 @@
                                 <div class="row mb-3">
                                     <label for="inputText" class="col-sm-2 col-form-label">납기일자</label>
                                     <div class="col-sm-10">
-                                        <input type="date" class="form-control" value="2024-08-05">
+                                        <input type="date" class="form-control" id="procurementPlanDeadLine">
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -140,19 +140,19 @@
                                 <div class="row mb-3">
                                     <label for="inputText" class="col-sm-2 col-form-label">품목명</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" value="펜대" disabled>
+                                        <input type="text" class="form-control" id="materialName" disabled>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="inputText" class="col-sm-2 col-form-label">규격</label>
+                                    <label for="inputText" class="col-sm-2 col-form-label">규격/재질</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" value="황동/8cm" disabled>
+                                        <input type="text" class="form-control" id="materialStandTexture" disabled>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <label for="inputText" class="col-sm-2 col-form-label">수량</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" value="50">
+                                        <input type="text" class="form-control" id="procurementPlanQuantity" disabled>
                                     </div>
                                 </div>
 
@@ -190,14 +190,25 @@
                     console.log("발주날짜", purchaseOrderDate);
                     $('#purchaseOrderMemo').val(purchaseOrderMemo);
                     $('#purchaseOrderDate').val(purchaseOrderDate);
-                    if (data.procurementPlan) {
-                        var procurementPlanQuantity = data.procurementPlan.procurementPlanQuantity;
-                        console.log("조달계획 양", procurementPlanQuantity);
-                        $('#procurementPlanQuantity').text(procurementPlanQuantity);
-                    } else {
-                        console.log("조달계획 정보가 없습니다.");
-                        $('#procurementPlanQuantity').text("N/A");
-                    }
+
+                    var procurementPlan = data.procurementPlanDTO;
+                    var procurementPlanQuantity = procurementPlan.procurementPlanQuantity;
+                    var procurementPlanDeadLine = procurementPlan.procurementPlanDeadLine.substring(0,10);
+                    console.log("조달계획 양", procurementPlanQuantity);
+                    console.log("조달납기 일자", procurementPlanDeadLine);
+                    $('#procurementPlanQuantity').val(procurementPlanQuantity);
+                    $('#procurementPlanDeadLine').val(procurementPlanDeadLine);
+
+
+                    var material = procurementPlan.temMaterialDTO;
+                    var materialName=material.materialName;
+                    var materialStand =material.materialStand;
+                    var materialTexture =material.materialTexture;
+
+                    $('#materialName').val(materialName);
+                    $('#materialStandTexture').val(materialStand+'/'+materialTexture);
+
+
                 }).fail(function(jqxhr, textStatus, error) {
                     var err = textStatus + ", " + error;
                     console.log("요청 실패: " + err);

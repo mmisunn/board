@@ -1,5 +1,6 @@
 package site.junggam.procurement_system.repository;
 
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -7,6 +8,7 @@ import site.junggam.procurement_system.entity.ProcurementPlan;
 import site.junggam.procurement_system.entity.PurchaseOrder;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -26,7 +28,18 @@ public class PurchaseOrderRepositoryTests {
                     .build();
             purchaseOrderRepository.save(purchaseOrder);
         });
+    }
 
+    @Test
+    @Transactional
+    public void getPurchaseOrder(){
+        String purchaseOrderCode = "PO1";
+        System.out.println("아래에 표시");
+        Optional<PurchaseOrder> purchaseOrder=purchaseOrderRepository.findById(purchaseOrderCode);
+        if(purchaseOrder.isPresent()){
+            System.out.println(purchaseOrder.get().getProcurementPlan().getProcurementPlanCode());
+            System.out.println(purchaseOrder.get().getProcurementPlan().getTemMaterial());
+        }
     }
 
 }

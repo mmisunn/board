@@ -17,4 +17,6 @@ public class PurchaseOrderDTO {
     private String purchaseOrderCode;
     private LocalDateTime purchaseOrderDate;
     private String purchaseOrderMemo;
+    private ProcurementPlanDTO procurementPlanDTO;
+
 }

@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@ToString(exclude = "procurementPlan")
 @Getter
 @Table(name="tbl_purchase_order")
 public class PurchaseOrder {

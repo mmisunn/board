@@ -1,6 +1,9 @@
 package site.junggam.procurement_system.service;
 
+import site.junggam.procurement_system.dto.ProcurementPlanDTO;
 import site.junggam.procurement_system.dto.PurchaseOrderDTO;
+import site.junggam.procurement_system.dto.TemMaterialDTO;
+import site.junggam.procurement_system.entity.ProcurementPlan;
 import site.junggam.procurement_system.entity.PurchaseOrder;
 
 public interface PurchaseOrderService {
@@ -25,6 +28,7 @@ public interface PurchaseOrderService {
                             .purchaseOrderCode(dto.getPurchaseOrderCode())
                             .purchaseOrderDate(dto.getPurchaseOrderDate())
                             .purchaseOrderMemo(dto.getPurchaseOrderMemo())
+                            .procurementPlan(ProcurementPlan.builder().procurementPlanCode(dto.getProcurementPlanDTO().getProcurementPlanCode()).build())
                             .build();
         return purchaseOrder;
     }
@@ -35,6 +39,23 @@ public interface PurchaseOrderService {
                 .purchaseOrderCode(entity.getPurchaseOrderCode())
                 .purchaseOrderDate(entity.getPurchaseOrderDate())
                 .purchaseOrderMemo(entity.getPurchaseOrderMemo())
+                .procurementPlanDTO(ProcurementPlanDTO.builder()
+                        .procurementPlanCode(entity.getProcurementPlan().getProcurementPlanCode())
+                        .procurementPlanDeadLine(entity.getProcurementPlan().getProcurementPlanDeadLine())
+                        .procurementPlanQuantity(entity.getProcurementPlan().getProcurementPlanQuantity())
+                        .procurementPlantRegDate(entity.getProcurementPlan().getProcurementPlantRegDate())
+                        .temMaterialDTO(TemMaterialDTO.builder()
+                                .materialCode(entity.getProcurementPlan().getTemMaterial().getMaterialCode())
+                                .materialName(entity.getProcurementPlan().getTemMaterial().getMaterialName())
+                                .materialStand(entity.getProcurementPlan().getTemMaterial().getMaterialStand())
+                                .materialTexture(entity.getProcurementPlan().getTemMaterial().getMaterialTexture())
+                                .materialDrawFile(entity.getProcurementPlan().getTemMaterial().getMaterialDrawFile())
+                                .materialEtcFile(entity.getProcurementPlan().getTemMaterial().getMaterialEtcFile())
+                                .materialRegDate(entity.getProcurementPlan().getTemMaterial().getMaterialRegDate())
+                                .materialModDate(entity.getProcurementPlan().getTemMaterial().getMaterialModDate())
+                                .materialSafeQuantity(entity.getProcurementPlan().getTemMaterial().getMaterialSafeQuantity())
+                                .build())
+                        .build())
                 .build();
         return purchaseOrderDTO;
     }

@@ -20,6 +20,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService{
     public PurchaseOrderDTO getPurchaseOrder(String purchaseOrderCode) {
         log.info("발주상세보기 서비스");
         Optional<PurchaseOrder> result=purchaseOrderRepository.findById(purchaseOrderCode);
+
         return entitytoDTO(result.get());
     }
 

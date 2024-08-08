@@ -6,7 +6,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import site.junggam.procurement_system.dto.ProcurementPlanDTO;
 import site.junggam.procurement_system.dto.PurchaseOrderDTO;
+import site.junggam.procurement_system.service.ProcurementPlanService;
 import site.junggam.procurement_system.service.PurchaseOrderService;
 
 @Log4j2
@@ -16,6 +18,7 @@ import site.junggam.procurement_system.service.PurchaseOrderService;
 public class PurchaseOrderRestController {
 
     private final PurchaseOrderService purchaseOrderService;
+//    private final ProcurementPlanService procurementPlanService;
     
     @GetMapping("/{purchaseOrderCode}")
     public ResponseEntity<PurchaseOrderDTO> orderget(@PathVariable("purchaseOrderCode") String purchaseOrderCode){
@@ -23,7 +26,7 @@ public class PurchaseOrderRestController {
         log.info("발주코드는 "+purchaseOrderCode);
 
         PurchaseOrderDTO purchaseOrderDTO=purchaseOrderService.getPurchaseOrder(purchaseOrderCode);
-        
+//        ProcurementPlanDTO procurementPlanDTO=procurementPlanService.
         return new ResponseEntity<>(purchaseOrderDTO, HttpStatus.OK);
     }
 
