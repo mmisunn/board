@@ -21,22 +21,19 @@ public class WarehousingController {
     public void warehousingread(){log.info("내용~");}
 
 
+    //db에 저장되어있는 파일을 불러온다.
+
+
+
     //p499의 파일저장섹션
     @GetMapping("/warehousingshipmentspecread")
     public void warehousingshipmentspecread() {
         log.info("입고상세내역의 출하명세서 확인.");
-    }
+    }}
 
-//
-//    @GetMapping("/view/{fileId}")
-//    public ResponseEntity<Resource> viewFileDetails(@PathVariable Long fileId) {
-//        Resource file = fileService.loadFileAsResource(fileId);
 
-//        @GetMapping("/view/{fileId}")
-//    public ResponseEntity<Resource> viewFileDetails(@PathVariable Long fileId) {
-//        Resource file = resource.loadFileAsResource(fileId);
-//
-//        return Warehousing.ok()
-//                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + file.getFilename() + "\"")
-//                .body(file);
-}
+
+
+
+
+
