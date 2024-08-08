@@ -2,6 +2,7 @@ package site.junggam.procurement_system.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -20,8 +21,10 @@ import site.junggam.procurement_system.service.ProductService;
 public class ProductRestController {
     private final ProductService productService;
 
-    @PostMapping("/register")
+    @PostMapping("/registerapi")
     public ResponseEntity<String> registerProduct(@RequestBody @Validated ProductDTO productDTO) { //@Valid
+        System.out.println("콘솔 로그 기록..");
+        log.info("product insert test..");
         try {
             // 제품 등록 처리
             String productCode = productService.productRegister(productDTO);
