@@ -1,5 +1,6 @@
 package site.junggam.procurement_system.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService{
     private final PurchaseOrderMapper purchaseOrderMapper;
 
     @Override
+    @Transactional
     public PurchaseOrderDTO getPurchaseOrder(String purchaseOrderCode) {
         log.info("발주상세보기 서비스");
         Optional<PurchaseOrder> result=purchaseOrderRepository.findById(purchaseOrderCode);

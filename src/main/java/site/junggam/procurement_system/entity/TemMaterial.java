@@ -10,7 +10,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString
+@ToString(exclude = "contract")
 public class TemMaterial {
     //임시 엔티티
     @Id
@@ -24,5 +24,7 @@ public class TemMaterial {
     private LocalDateTime materialModDate;
     private Integer materialSafeQuantity;
 
+    @OneToOne(mappedBy = "temMaterial", fetch = FetchType.LAZY)
+    private Contract contract;
 
 }

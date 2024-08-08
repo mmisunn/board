@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import site.junggam.procurement_system.entity.PurchaseOrderStatus;
 
 import java.time.LocalDateTime;
 
@@ -18,5 +19,8 @@ public class PurchaseOrderDTO {
     private LocalDateTime purchaseOrderDate;
     private String purchaseOrderMemo;
     private ProcurementPlanDTO procurementPlanDTO;
+
+    @Builder.Default
+    private PurchaseOrderStatus purchaseOrderStatus = PurchaseOrderStatus.PENDING;
 
 }

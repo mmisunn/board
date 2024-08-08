@@ -21,7 +21,7 @@ public class PurchaseOrderServiceTests {
         String purchaseOrderCode="PO1";
         PurchaseOrderDTO purchaseOrderDTO = purchaseOrderService.getPurchaseOrder(purchaseOrderCode);
         System.out.println(purchaseOrderDTO);
-        System.out.println(purchaseOrderDTO.getProcurementPlanDTO().getTemMaterialDTO());
+        System.out.println(purchaseOrderDTO.getProcurementPlanDTO());
 
 
     }
