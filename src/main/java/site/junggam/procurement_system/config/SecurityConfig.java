@@ -16,6 +16,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         log.info("필터체인까지 들어왔음");
         http.authorizeHttpRequests(auth ->{auth.anyRequest().permitAll();}); //모든 페이지 로그인 없이 들어가게 함
+        http.csrf().disable(); //나중에 지워야 할 것 같음
         return http.build();
     }
 }
