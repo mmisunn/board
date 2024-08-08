@@ -5,6 +5,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import site.junggam.procurement_system.dto.PurchaseOrderDTO;
 import site.junggam.procurement_system.entity.PurchaseOrder;
+import site.junggam.procurement_system.mapper.PurchaseOrderMapper;
 import site.junggam.procurement_system.repository.PurchaseOrderRepository;
 
 import java.util.Optional;
@@ -15,13 +16,13 @@ import java.util.Optional;
 public class PurchaseOrderServiceImpl implements PurchaseOrderService{
 
     private final PurchaseOrderRepository purchaseOrderRepository;
+    private final PurchaseOrderMapper purchaseOrderMapper;
 
     @Override
     public PurchaseOrderDTO getPurchaseOrder(String purchaseOrderCode) {
         log.info("발주상세보기 서비스");
         Optional<PurchaseOrder> result=purchaseOrderRepository.findById(purchaseOrderCode);
-
-        return entitytoDTO(result.get());
+        return result.map(purchaseOrderMapper::toDTO).orElse(null);
     }
 
     @Override
