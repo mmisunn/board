@@ -118,7 +118,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <form>
-                                    <h5 class="card-title">거래내용</h5>
+                                    <h5 class="card-title">거래내용 나중에 수정 <span id="procurementPlanCode"></span></h5>
                                     <div class="row mb-3">
                                         <label for="inputText" class="col-sm-2 col-form-label">발주일자</label>
                                         <div class="col-sm-10">
@@ -206,11 +206,16 @@
                     console.log("응답 데이터", data);
 
                     var purchaseOrderMemo = data.purchaseOrderMemo;
-                    var purchaseOrderDate = data.purchaseOrderDate.substring(0,10);
+
                     console.log("발주비고", purchaseOrderMemo);
-                    console.log("발주날짜", purchaseOrderDate);
                     $('#purchaseOrderMemo').val(purchaseOrderMemo);
-                    $('#purchaseOrderDate').val(purchaseOrderDate);
+
+                    const today = new Date();
+                    const year = today.getFullYear();
+                    const month = String(today.getMonth() + 1).padStart(2, '0');
+                    const day = String(today.getDate()).padStart(2, '0');
+                    const formattedDate = `${year}-${month}-${day}`;
+                    $('#purchaseOrderDate').val(formattedDate);
 
                     var procurementPlan = data.procurementPlanDTO;
                     var procurementPlanQuantity = procurementPlan.procurementPlanQuantity;
@@ -219,6 +224,7 @@
                     console.log("조달납기 일자", procurementPlanDeadLine);
                     $('#procurementPlanQuantity').val(procurementPlanQuantity);
                     $('#procurementPlanDeadLine').val(procurementPlanDeadLine);
+                    $('#procurementPlanCode').val(procurementPlan.procurementPlanCode);
 
 
                     var material = procurementPlan.temMaterialDTO;
@@ -243,6 +249,8 @@
                     var purchaseOrderStatus= data.purchaseOrderStatus;
                     console.log("발주상태",purchaseOrderStatus)
                     if (purchaseOrderStatus !== "PENDING") {
+                        var purchaseOrderDate = data.purchaseOrderDate.substring(0,10);
+                        $('#purchaseOrderDate').val(purchaseOrderDate);
                         $("#purchaseOrderDate").prop("disabled", true);
                         $("#purchaseOrderMemo").prop("disabled", true);
                         $('#ourCompanyrAddress').prop("disabled", true);
@@ -323,9 +331,11 @@
     <script th:inline="javascript">
         $('#orderAndDownload').click(function (){
             var purchaseOrderCode = [[${purchaseOrderCode}]];
-            var purchaserDTO='{"purchaseOrderCode": '+purchaseOrderCode+' , "purchaseOrderDate": "2024-08-08T21:06:48.767113" , "purchaseOrderMemo": "발주수정 입니다" , "procurementPlanDTO": null, "purchaseOrderStatus": "PENDING" , "inspectionPlanDTOList": null }';
+            var purchaserDTO={procurementPlanDTO : { procurementPlanCode : $('#procurementPlanCode').val()}
+                ,purchaseOrderCode: purchaseOrderCode , purchaseOrderDate: $('#purchaseOrderDate').val()+'T00:00:00.000000' , purchaseOrderMemo: $('#purchaseOrderMemo').val() , purchaseOrderStatus: "COMPLETED" };
+            console.log("수집한데이터",purchaserDTO);
             $.ajax({
-                url:'/purchasercontent/'+purchaseOrderCode,
+                url:'/purchaseordercontent/'+purchaseOrderCode,
                 type:"POST",
                 data:JSON.stringify(purchaserDTO),
                 contentType:"application/json; charset=utf-8",

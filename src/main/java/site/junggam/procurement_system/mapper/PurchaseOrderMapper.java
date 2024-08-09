@@ -35,10 +35,11 @@ public interface PurchaseOrderMapper {
 
 //    @Mapping(source = "procurementPlanDTO.procurementPlanCode", target = "procurementPlan.procurementPlanCode")
     @Mapping(target = "purchaseOrderStatus",defaultValue = "PENDING")
+    @Mapping(target = "procurementPlan", ignore = true)
     PurchaseOrder toEntity(PurchaseOrderDTO purchaseOrderDTO);
 //
 //    @Mapping(source = "temMaterialDTO.materialCode", target = "temMaterial.materialCode")
-//    ProcurementPlan toEntity(ProcurementPlanDTO procurementPlanDTO);
+    ProcurementPlan toEntity(ProcurementPlanDTO procurementPlanDTO);
 //
 //    @Mapping(source = "contractDTO.contractCode", target = "contract.contractCode")
 //    TemMaterial toEntity(TemMaterialDTO temMaterialDTO);

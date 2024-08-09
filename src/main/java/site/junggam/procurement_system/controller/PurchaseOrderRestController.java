@@ -29,11 +29,13 @@ public class PurchaseOrderRestController {
         return new ResponseEntity<>(purchaseOrderDTO, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{purchaseOrderCode}",
-                    method = {RequestMethod.POST})
-    public ResponseEntity<String> purchaseOrderSave(@PathVariable("purchaseOrderCode") String purchaseOrderCode){
+    @PostMapping(value = "/{purchaseOrderCode}")
+    public ResponseEntity<String> purchaseOrderSave(@RequestBody PurchaseOrderDTO purchaseOrderDTO){
         log.info("발주수정 레스트컨트롤러까지 들어옴");
-        return null;
+        log.info(purchaseOrderDTO);
+        purchaseOrderService.savePurchaseOrder(purchaseOrderDTO);
+        log.info("발주처리 완료!!!");
+        return new ResponseEntity<>("발주처리되었습니다", HttpStatus.OK);
     }
 
 }

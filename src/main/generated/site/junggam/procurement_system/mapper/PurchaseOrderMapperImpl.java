@@ -20,7 +20,7 @@ import site.junggam.procurement_system.entity.TemMaterial;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-08-09T14:31:40+0900",
+    date = "2024-08-09T19:08:16+0900",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.2 (Oracle Corporation)"
 )
 @Component
@@ -180,6 +180,22 @@ public class PurchaseOrderMapperImpl implements PurchaseOrderMapper {
         purchaseOrder.purchaseOrderMemo( purchaseOrderDTO.getPurchaseOrderMemo() );
 
         return purchaseOrder.build();
+    }
+
+    @Override
+    public ProcurementPlan toEntity(ProcurementPlanDTO procurementPlanDTO) {
+        if ( procurementPlanDTO == null ) {
+            return null;
+        }
+
+        ProcurementPlan.ProcurementPlanBuilder procurementPlan = ProcurementPlan.builder();
+
+        procurementPlan.procurementPlanCode( procurementPlanDTO.getProcurementPlanCode() );
+        procurementPlan.procurementPlantRegDate( procurementPlanDTO.getProcurementPlantRegDate() );
+        procurementPlan.procurementPlanDeadLine( procurementPlanDTO.getProcurementPlanDeadLine() );
+        procurementPlan.procurementPlanQuantity( procurementPlanDTO.getProcurementPlanQuantity() );
+
+        return procurementPlan.build();
     }
 
     protected PurchaserDTO purchaserToPurchaserDTO(Purchaser purchaser) {

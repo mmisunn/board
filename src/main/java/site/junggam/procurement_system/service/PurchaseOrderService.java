@@ -13,7 +13,7 @@ public interface PurchaseOrderService {
     PurchaseOrderDTO getPurchaseOrder(String purchaseOrderCode);
 
     //2-2 발주 처리
-    void registerPurchaseOrder(PurchaseOrderDTO purchaseOrderDTO);
+    void savePurchaseOrder(PurchaseOrderDTO purchaseOrderDTO);
     
 
 

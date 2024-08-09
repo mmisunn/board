@@ -50,8 +50,9 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService{
     }
 
     @Override
-    public void registerPurchaseOrder(PurchaseOrderDTO purchaseOrderDTO) {
-        log.info("발주처리");
-
+    public void savePurchaseOrder(PurchaseOrderDTO purchaseOrderDTO) {
+        purchaseOrderRepository.save(purchaseOrderMapper.toEntity(purchaseOrderDTO));
     }
+
+
 }
