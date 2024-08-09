@@ -20,6 +20,11 @@ public class NoticeController {
         log.info("전체공지상세보기");
     }
 
+    @GetMapping("/noticemodify")
+    public void noticemodify() {
+        log.info("공지사항 수정하기");
+    }
+
 
 
 
