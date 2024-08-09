@@ -29,7 +29,21 @@ public class WarehousingController {
     @GetMapping("/warehousingshipmentspecread")
     public void warehousingshipmentspecread() {
         log.info("입고상세내역의 출하명세서 확인.");
-    }}
+    }
+
+    //업로드 처리랑..다운로드
+
+    @GetMapping("/warehousingupload")
+    public void warehousinguplad(){
+    log.info("warehousing upload");
+
+    }
+
+
+
+}
+
+
 
 
 
