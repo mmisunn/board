@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import site.junggam.procurement_system.entity.PurchaseOrderStatus;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Builder
@@ -22,5 +24,8 @@ public class PurchaseOrderDTO {
 
     @Builder.Default
     private PurchaseOrderStatus purchaseOrderStatus = PurchaseOrderStatus.PENDING;
+
+    @Builder.Default
+    private List<InspectionPlanDTO> InspectionPlanDTOList = new ArrayList<>();
 
 }

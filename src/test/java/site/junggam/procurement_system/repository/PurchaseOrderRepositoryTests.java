@@ -39,10 +39,11 @@ public class PurchaseOrderRepositoryTests {
         System.out.println("아래에 표시");
         Optional<PurchaseOrder> purchaseOrder=purchaseOrderRepository.findById(purchaseOrderCode);
         if(purchaseOrder.isPresent()){
-            System.out.println(purchaseOrder.get().getPurchaseOrderStatus());
-            System.out.println(purchaseOrder.get().getProcurementPlan().getProcurementPlanCode());
-            System.out.println(purchaseOrder.get().getProcurementPlan().getTemMaterial());
-            System.out.println(purchaseOrder.get().getProcurementPlan().getTemMaterial().getContract());
+//            System.out.println(purchaseOrder.get().getPurchaseOrderStatus());
+//            System.out.println(purchaseOrder.get().getProcurementPlan().getProcurementPlanCode());
+//            System.out.println(purchaseOrder.get().getProcurementPlan().getTemMaterial());
+//            System.out.println(purchaseOrder.get().getProcurementPlan().getTemMaterial().getContract());
+            System.out.println(purchaseOrder.get());
         }
     }
 

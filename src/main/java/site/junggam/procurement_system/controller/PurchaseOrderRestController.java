@@ -20,13 +20,20 @@ public class PurchaseOrderRestController {
     private final PurchaseOrderService purchaseOrderService;
 
     @GetMapping("/{purchaseOrderCode}")
-    public ResponseEntity<PurchaseOrderDTO> orderGet(@PathVariable("purchaseOrderCode") String purchaseOrderCode){
+    public ResponseEntity<PurchaseOrderDTO> purchaseOrderGet(@PathVariable("purchaseOrderCode") String purchaseOrderCode){
         log.info("발주 레스트 컨트롤러까지는 진입...함!!!!");
         log.info("발주코드는 "+purchaseOrderCode);
 
         PurchaseOrderDTO purchaseOrderDTO=purchaseOrderService.getPurchaseOrder(purchaseOrderCode);
 //        ProcurementPlanDTO procurementPlanDTO=procurementPlanService.
         return new ResponseEntity<>(purchaseOrderDTO, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{purchaseOrderCode}",
+                    method = {RequestMethod.POST})
+    public ResponseEntity<String> purchaseOrderSave(@PathVariable("purchaseOrderCode") String purchaseOrderCode){
+        log.info("발주수정 레스트컨트롤러까지 들어옴");
+        return null;
     }
 
 }

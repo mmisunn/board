@@ -117,56 +117,60 @@
                     <form action="orderinsert" method="post">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">거래내용</h5>
-                                <div class="row mb-3">
-                                    <label for="inputText" class="col-sm-2 col-form-label">발주일자</label>
-                                    <div class="col-sm-10">
-                                        <input type="date" class="form-control" id="purchaseOrderDate">
+                                <form>
+                                    <h5 class="card-title">거래내용</h5>
+                                    <div class="row mb-3">
+                                        <label for="inputText" class="col-sm-2 col-form-label">발주일자</label>
+                                        <div class="col-sm-10">
+                                            <input type="date" class="form-control" id="purchaseOrderDate">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label for="inputText" class="col-sm-2 col-form-label">납기일자</label>
-                                    <div class="col-sm-10">
-                                        <input type="date" class="form-control" id="procurementPlanDeadLine">
+                                    <div class="row mb-3">
+                                        <label for="inputText" class="col-sm-2 col-form-label" >납기일자</label>
+                                        <div class="col-sm-10">
+                                            <input type="date" class="form-control" id="procurementPlanDeadLine" disabled>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label for="inputText" class="col-sm-2 col-form-label">납품장소</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="ourCompanyrAddress">
+                                    <div class="row mb-3">
+                                        <label for="inputText" class="col-sm-2 col-form-label">납품장소</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="ourCompanyrAddress">
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="row mb-3">
-                                    <label for="inputText" class="col-sm-2 col-form-label">품목명</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="materialName" disabled>
+                                    <div class="row mb-3">
+                                        <label for="inputText" class="col-sm-2 col-form-label">품목명</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="materialName" disabled>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label for="inputText" class="col-sm-2 col-form-label">규격/재질</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="materialStandTexture" disabled>
+                                    <div class="row mb-3">
+                                        <label for="inputText" class="col-sm-2 col-form-label">규격/재질</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="materialStandTexture" disabled>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label for="inputText" class="col-sm-2 col-form-label">수량</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="procurementPlanQuantity" disabled>
+                                    <div class="row mb-3">
+                                        <label for="inputText" class="col-sm-2 col-form-label">수량</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="procurementPlanQuantity" disabled>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="row mb-3">
-                                    <label for="inputText" class="col-sm-2 col-form-label">비고</label>
-                                    <div class="col-sm-10">
-                                        <textarea class="form-control" style="height: 100px" id="purchaseOrderMemo"></textarea>
+                                    <div class="row mb-3">
+                                        <label for="inputText" class="col-sm-2 col-form-label">비고</label>
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" style="height: 100px" id="purchaseOrderMemo"></textarea>
+                                        </div>
                                     </div>
-                                </div>
-                                <div id="content">
-                                    <button type="button" class="btn btn-primary" id="addHtmlBtn">검수계획추가</button>
-                                    <button type="button" class="btn btn-primary">발주처리 및 다운로드</button>
-                                    <button type="button" class="btn btn-primary">리스트</button>
-                                </div>
+                                    <div>
+                                        <span id="content">
+                                        <button type="button" class="btn btn-primary" id="addInspectionPlanResisterBtn">검수계획추가</button>
+                                        <button type="button" class="btn btn-primary" id="orderAndDownload">발주처리 및 다운로드 </button>
+                                        </span>
+                                        <a th:href="purchaseOrderList"><button type="button" class="btn btn-primary">리스트</button></a>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </form>
@@ -175,6 +179,7 @@
             </div> <!--End row-->
         </section>
     </main>
+    <!--이하 정보 불러오는 JS-->
     <script th:inline="javascript">
         $(document).ready(function (e) {
             function getOurCompany(){
@@ -199,6 +204,7 @@
                 $.getJSON("/purchaseordercontent/" + purchaseOrderCode, function(data) {
                     console.log("발주코드", purchaseOrderCode);
                     console.log("응답 데이터", data);
+
                     var purchaseOrderMemo = data.purchaseOrderMemo;
                     var purchaseOrderDate = data.purchaseOrderDate.substring(0,10);
                     console.log("발주비고", purchaseOrderMemo);
@@ -234,6 +240,31 @@
                     $('#purchaserManagerEmail').val(purchaserManagerEmail);
                     $('#purchaserManagerFax').val(purchaserManagerFax);
 
+                    var purchaseOrderStatus= data.purchaseOrderStatus;
+                    console.log("발주상태",purchaseOrderStatus)
+                    if (purchaseOrderStatus !== "PENDING") {
+                        $("#purchaseOrderDate").prop("disabled", true);
+                        $("#purchaseOrderMemo").prop("disabled", true);
+                        $('#ourCompanyrAddress').prop("disabled", true);
+                        var inspectionPlanDTOList= data.inspectionPlanDTOList;
+                        console.log("검수계획",inspectionPlanDTOList)
+                        console.log("검수계획개수",inspectionPlanDTOList.length)
+                        if ( inspectionPlanDTOList.length === 0) {
+                            console.log("검수계획개수없음")
+                            $('#content').html(`
+                            <hr>
+                            <h5 class="card-title">
+                              검수계획 : 미등록
+                              <button type="button" class="btn btn-primary btn-sm" id="addHtmlBtn">검수계획추가</button>
+                            </h5>
+                            <button type="button" class="btn btn-primary">발주수정</button>
+                            <button type="button" class="btn btn-primary">발주서보기</button>
+                            `);
+                        }else{
+                            console.log("검수계획 있을떄! 이건 나중에 작업")
+                        }
+                    }
+
                 }).fail(function(jqxhr, textStatus, error) {
                     var err = textStatus + ", " + error;
                     console.log("발주 정보 요청 실패: " + err);
@@ -244,6 +275,69 @@
             getOurCompany();
         });
     </script>
+    <!--이상 정보 불러오는 JS-->
+    <!--이하 검수처리 계획 등록 화면에 뜨게 하는 JS-->
+    <script th:inline="javascript">
+        document.getElementById('addInspectionPlanResisterBtn').addEventListener('click', function () {
+            var contentDiv = document.getElementById('content');
+            var newHtml = `
+              <hr>
+                        <h5 class="card-title">검수계획</h5>
+                        <div class="row mb-3">
+                          <label for="inputText" class="col-sm-2 col-form-label">날짜</label>
+                          <div class="col-sm-10">
+                            <input type="date" class="form-control">
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="inputTime" class="col-sm-2 col-form-label">시간</label>
+                          <div class="col-sm-10">
+                            <input type="time" class="form-control">
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="inputText" class="col-sm-2 col-form-label">담당자</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" >
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="inputText" class="col-sm-2 col-form-label">연락처</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" >
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="inputPassword" class="col-sm-2 col-form-label">비고</label>
+                          <div class="col-sm-10">
+                            <textarea class="form-control" style="height: 100px"></textarea>
+                          </div>
+                        </div>
+                        <button type="button" class="btn btn-primary">발주/검수계획저장처리 및 다운로드</button>
+              `;
+            contentDiv.innerHTML = newHtml;
+        });
+    </script>
+    <!--이상 검수처리 계획 등록 화면에 뜨게 하는 JS-->
+    <!--이하 발주처리 및 다운로드 JS-->
+    <script th:inline="javascript">
+        $('#orderAndDownload').click(function (){
+            var purchaseOrderCode = [[${purchaseOrderCode}]];
+            var purchaserDTO='{"purchaseOrderCode": '+purchaseOrderCode+' , "purchaseOrderDate": "2024-08-08T21:06:48.767113" , "purchaseOrderMemo": "발주수정 입니다" , "procurementPlanDTO": null, "purchaseOrderStatus": "PENDING" , "inspectionPlanDTOList": null }';
+            $.ajax({
+                url:'/purchasercontent/'+purchaseOrderCode,
+                type:"POST",
+                data:JSON.stringify(purchaserDTO),
+                contentType:"application/json; charset=utf-8",
+                dataType:"text",
+                success: function(result){
+                    console.log("결과값result: " + result);
+                    self.location.reload();
+                }
+            })
+        })
+    </script>
+    <!--이상 발주처리 및 다운로드 JS-->
     <!-- End #main -->
     <th:block th:replace="~{/fragments/bodyFragment::footer}"></th:block>
     <th:block th:replace="~{/fragments/bodyFragment::js}"></th:block>

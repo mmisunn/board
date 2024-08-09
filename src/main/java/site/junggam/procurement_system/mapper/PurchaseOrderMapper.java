@@ -6,6 +6,8 @@ import org.mapstruct.factory.Mappers;
 import site.junggam.procurement_system.dto.*;
 import site.junggam.procurement_system.entity.*;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface PurchaseOrderMapper {
     PurchaseOrderMapper INSTANCE = Mappers.getMapper(PurchaseOrderMapper.class);
@@ -23,6 +25,13 @@ public interface PurchaseOrderMapper {
     ContractDTO toDTO(Contract contract);
 
     PurchaserDTO toDTO(PurchaserDTO purchaserDTO);
+
+    List<InspectionPlanDTO> toInspectionPlanDTOs(List<InspectionPlan> inspectionPlanList);
+
+    @Mapping(source = "inspectionPlanDeliveryProgress", target = "inspectionPlanDeliveryProgress")
+    @Mapping(source = "inspectionPlanStatus", target = "inspectionPlanStatus")
+    @Mapping(target = "purchaseOrder", ignore = true)
+    InspectionPlanDTO toInspectionPlanDTO(InspectionPlan inspectionPlan);
 
 //    @Mapping(source = "procurementPlanDTO.procurementPlanCode", target = "procurementPlan.procurementPlanCode")
     @Mapping(target = "purchaseOrderStatus",defaultValue = "PENDING")

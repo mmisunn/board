@@ -5,11 +5,13 @@ import java.util.List;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 import site.junggam.procurement_system.dto.ContractDTO;
+import site.junggam.procurement_system.dto.InspectionPlanDTO;
 import site.junggam.procurement_system.dto.ProcurementPlanDTO;
 import site.junggam.procurement_system.dto.PurchaseOrderDTO;
 import site.junggam.procurement_system.dto.PurchaserDTO;
 import site.junggam.procurement_system.dto.TemMaterialDTO;
 import site.junggam.procurement_system.entity.Contract;
+import site.junggam.procurement_system.entity.InspectionPlan;
 import site.junggam.procurement_system.entity.ProcurementPlan;
 import site.junggam.procurement_system.entity.PurchaseOrder;
 import site.junggam.procurement_system.entity.PurchaseOrderStatus;
@@ -18,7 +20,7 @@ import site.junggam.procurement_system.entity.TemMaterial;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-08-08T20:58:24+0900",
+    date = "2024-08-09T14:31:40+0900",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.2 (Oracle Corporation)"
 )
 @Component
@@ -124,6 +126,39 @@ public class PurchaseOrderMapperImpl implements PurchaseOrderMapper {
         }
 
         return purchaserDTO1.build();
+    }
+
+    @Override
+    public List<InspectionPlanDTO> toInspectionPlanDTOs(List<InspectionPlan> inspectionPlanList) {
+        if ( inspectionPlanList == null ) {
+            return null;
+        }
+
+        List<InspectionPlanDTO> list = new ArrayList<InspectionPlanDTO>( inspectionPlanList.size() );
+        for ( InspectionPlan inspectionPlan : inspectionPlanList ) {
+            list.add( toInspectionPlanDTO( inspectionPlan ) );
+        }
+
+        return list;
+    }
+
+    @Override
+    public InspectionPlanDTO toInspectionPlanDTO(InspectionPlan inspectionPlan) {
+        if ( inspectionPlan == null ) {
+            return null;
+        }
+
+        InspectionPlanDTO.InspectionPlanDTOBuilder inspectionPlanDTO = InspectionPlanDTO.builder();
+
+        inspectionPlanDTO.inspectionPlanDeliveryProgress( inspectionPlan.getInspectionPlanDeliveryProgress() );
+        inspectionPlanDTO.inspectionPlanStatus( inspectionPlan.getInspectionPlanStatus() );
+        inspectionPlanDTO.inspectionPlanCode( inspectionPlan.getInspectionPlanCode() );
+        inspectionPlanDTO.inspectionPlanDateTime( inspectionPlan.getInspectionPlanDateTime() );
+        inspectionPlanDTO.inspectionPlanMemo( inspectionPlan.getInspectionPlanMemo() );
+        inspectionPlanDTO.inspectionPlanProgress( inspectionPlan.getInspectionPlanProgress() );
+        inspectionPlanDTO.inspectionPlanComplementary( inspectionPlan.getInspectionPlanComplementary() );
+
+        return inspectionPlanDTO.build();
     }
 
     @Override

@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/purchaseorder")
 public class PurchaseOrderController {
 
-    @RequestMapping("/orderlist")
-    public void orderlist(){
+    @RequestMapping("/purchaseOrderList")
+    public void purchaseOrderList(){
         log.info("발주리스트 나옴");
     }
 
-    @GetMapping("/orderget")
-    public void orderget(@RequestParam("purchaseOrderCode") String purchaseOrderCode, Model model){
+    @GetMapping("/purchaseOrderGet")
+    public void purchaseOrderget(@RequestParam("purchaseOrderCode") String purchaseOrderCode, Model model){
         log.info("발주서 상세보기 컨트롤러");
         log.info("발주코드는 "+purchaseOrderCode);
         model.addAttribute("purchaseOrderCode",purchaseOrderCode);
