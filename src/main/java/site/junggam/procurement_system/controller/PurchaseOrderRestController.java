@@ -18,11 +18,10 @@ import site.junggam.procurement_system.service.PurchaseOrderService;
 public class PurchaseOrderRestController {
 
     private final PurchaseOrderService purchaseOrderService;
-//    private final ProcurementPlanService procurementPlanService;
-    
+
     @GetMapping("/{purchaseOrderCode}")
-    public ResponseEntity<PurchaseOrderDTO> orderget(@PathVariable("purchaseOrderCode") String purchaseOrderCode){
-        log.info("레스트 컨트롤러까지는 진입...함!!!!");
+    public ResponseEntity<PurchaseOrderDTO> orderGet(@PathVariable("purchaseOrderCode") String purchaseOrderCode){
+        log.info("발주 레스트 컨트롤러까지는 진입...함!!!!");
         log.info("발주코드는 "+purchaseOrderCode);
 
         PurchaseOrderDTO purchaseOrderDTO=purchaseOrderService.getPurchaseOrder(purchaseOrderCode);
