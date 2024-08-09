@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import site.junggam.procurement_system.entity.ProcurementPlan;
 import site.junggam.procurement_system.entity.PurchaseOrder;
+import site.junggam.procurement_system.entity.PurchaseOrderStatus;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -25,6 +26,7 @@ public class PurchaseOrderRepositoryTests {
                     .purchaseOrderDate(LocalDateTime.now())
                     .purchaseOrderMemo("발주비고 입니다"+i)
                     .procurementPlan(ProcurementPlan.builder().procurementPlanCode("PPC-"+i).build())
+                    .purchaseOrderStatus(PurchaseOrderStatus.PENDING)
                     .build();
             purchaseOrderRepository.save(purchaseOrder);
         });
@@ -37,8 +39,10 @@ public class PurchaseOrderRepositoryTests {
         System.out.println("아래에 표시");
         Optional<PurchaseOrder> purchaseOrder=purchaseOrderRepository.findById(purchaseOrderCode);
         if(purchaseOrder.isPresent()){
+            System.out.println(purchaseOrder.get().getPurchaseOrderStatus());
             System.out.println(purchaseOrder.get().getProcurementPlan().getProcurementPlanCode());
             System.out.println(purchaseOrder.get().getProcurementPlan().getTemMaterial());
+            System.out.println(purchaseOrder.get().getProcurementPlan().getTemMaterial().getContract());
         }
     }
 

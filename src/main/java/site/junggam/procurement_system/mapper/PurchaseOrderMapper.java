@@ -3,12 +3,8 @@ package site.junggam.procurement_system.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-import site.junggam.procurement_system.dto.ProcurementPlanDTO;
-import site.junggam.procurement_system.dto.PurchaseOrderDTO;
-import site.junggam.procurement_system.dto.TemMaterialDTO;
-import site.junggam.procurement_system.entity.ProcurementPlan;
-import site.junggam.procurement_system.entity.PurchaseOrder;
-import site.junggam.procurement_system.entity.TemMaterial;
+import site.junggam.procurement_system.dto.*;
+import site.junggam.procurement_system.entity.*;
 
 @Mapper(componentModel = "spring")
 public interface PurchaseOrderMapper {
@@ -20,13 +16,26 @@ public interface PurchaseOrderMapper {
     @Mapping(source = "temMaterial", target = "temMaterialDTO")
     ProcurementPlanDTO toDTO(ProcurementPlan procurementPlan);
 
+    @Mapping(source = "contract", target = "contractDTO")
     TemMaterialDTO toDTO(TemMaterial temMaterial);
 
-    @Mapping(source = "procurementPlanDTO.procurementPlanCode", target = "procurementPlan.procurementPlanCode")
+    @Mapping(source = "purchaser", target = "purchaserDTO")
+    ContractDTO toDTO(Contract contract);
+
+    PurchaserDTO toDTO(PurchaserDTO purchaserDTO);
+
+//    @Mapping(source = "procurementPlanDTO.procurementPlanCode", target = "procurementPlan.procurementPlanCode")
+    @Mapping(target = "purchaseOrderStatus",defaultValue = "PENDING")
     PurchaseOrder toEntity(PurchaseOrderDTO purchaseOrderDTO);
-
-    @Mapping(source = "temMaterialDTO.materialCode", target = "temMaterial.materialCode")
-    ProcurementPlan toEntity(ProcurementPlanDTO procurementPlanDTO);
-
-    TemMaterial toEntity(TemMaterialDTO temMaterialDTO);
+//
+//    @Mapping(source = "temMaterialDTO.materialCode", target = "temMaterial.materialCode")
+//    ProcurementPlan toEntity(ProcurementPlanDTO procurementPlanDTO);
+//
+//    @Mapping(source = "contractDTO.contractCode", target = "contract.contractCode")
+//    TemMaterial toEntity(TemMaterialDTO temMaterialDTO);
+//
+//    @Mapping(source = "purchaserDTO.purchaserCode", target = "purchaser.purchaserCode")
+//    Contract toEntity(ContractDTO contractDTO);
+//
+//    Purchaser toEntity(PurchaserDTO purchaserDTO);
 }

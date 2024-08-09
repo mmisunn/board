@@ -21,4 +21,8 @@ public class PurchaseOrder {
     @OneToOne
     @JoinColumn(name = "procurement_plan_code")
     private ProcurementPlan procurementPlan;
+
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private PurchaseOrderStatus purchaseOrderStatus = PurchaseOrderStatus.PENDING;
 }
