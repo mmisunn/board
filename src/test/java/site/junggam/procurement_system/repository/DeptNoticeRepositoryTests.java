@@ -5,13 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class NoticeRepositoryTest {
+public class DeptNoticeRepositoryTests {
 
     @Autowired
-    private NoticeRepository noticeRepository;
+    private DeptNoticeRepository deptNoticeRepository;
 
     @Test
-    public void insertNotice() {
+    public void insertDeptNotice() {
 
     }
+
 }
