@@ -202,62 +202,34 @@
 
             function getPurchaseOrderContent() {
                 $.getJSON("/purchaseordercontent/" + purchaseOrderCode, function(data) {
-                    console.log("발주코드", purchaseOrderCode);
-                    console.log("응답 데이터", data);
-
-                    var purchaseOrderMemo = data.purchaseOrderMemo;
-
-                    console.log("발주비고", purchaseOrderMemo);
-                    $('#purchaseOrderMemo').val(purchaseOrderMemo);
-
                     const today = new Date();
                     const year = today.getFullYear();
                     const month = String(today.getMonth() + 1).padStart(2, '0');
                     const day = String(today.getDate()).padStart(2, '0');
                     const formattedDate = `${year}-${month}-${day}`;
-                    $('#purchaseOrderDate').val(formattedDate);
 
-                    var procurementPlan = data.procurementPlanDTO;
-                    var procurementPlanQuantity = procurementPlan.procurementPlanQuantity;
-                    var procurementPlanDeadLine = procurementPlan.procurementPlanDeadLine.substring(0,10);
-                    console.log("조달계획 양", procurementPlanQuantity);
-                    console.log("조달납기 일자", procurementPlanDeadLine);
-                    $('#procurementPlanQuantity').val(procurementPlanQuantity);
-                    $('#procurementPlanDeadLine').val(procurementPlanDeadLine);
-                    $('#procurementPlanCode').val(procurementPlan.procurementPlanCode);
+                    console.log("응답데이터", data);
+                    $('#purchaserName').val(data.purchaserName);
+                    $('#purchaserManager').val(data.purchaserManager);
+                    $('#purchaserManagerTel').val(data.purchaserManagerTel);
+                    $('#purchaserManagerFax').val(data.purchaserManagerFax);
+                    $('#purchaserManagerEmail').val(data.purchaserManagerEmail);
 
+                    $('#purchaseOrderDate').val(formattedDate)
+                    $('#procurementPlanDeadLine').val(data.procurementPlanDeadLine.substring(0,10));
+                    $('#materialName').val(data.materialName);
+                    $('#materialStandTexture').val(data.materialStand+' / '+data.materialTexture);
+                    $('#procurementPlanQuantity').val(data.procurementPlanQuantity);
+                    $('#purchaseOrderMemo').val(data.purchaseOrderMemo);
+                    var purchaseOrderStatus =data.purchaseOrderStatus;
 
-                    var material = procurementPlan.temMaterialDTO;
-                    var materialName=material.materialName;
-                    var materialStand =material.materialStand;
-                    var materialTexture =material.materialTexture;
-                    $('#materialName').val(materialName);
-                    $('#materialStandTexture').val(materialStand+'/'+materialTexture);
-
-                    var purchaser=material.contractDTO.purchaserDTO;
-                    var purchaserName=purchaser.purchaserName;
-                    var purchaserManager=purchaser.purchaserManager;
-                    var purchaserManagerTel=purchaser.purchaserManagerTel;
-                    var purchaserManagerEmail=purchaser.purchaserManagerEmail;
-                    var purchaserManagerFax=purchaser.purchaserManagerFax;
-                    $('#purchaserName').val(purchaserName);
-                    $('#purchaserManager').val(purchaserManager);
-                    $('#purchaserManagerTel').val(purchaserManagerTel);
-                    $('#purchaserManagerEmail').val(purchaserManagerEmail);
-                    $('#purchaserManagerFax').val(purchaserManagerFax);
-
-                    var purchaseOrderStatus= data.purchaseOrderStatus;
-                    console.log("발주상태",purchaseOrderStatus)
                     if (purchaseOrderStatus !== "PENDING") {
-                        var purchaseOrderDate = data.purchaseOrderDate.substring(0,10);
-                        $('#purchaseOrderDate').val(purchaseOrderDate);
+                        $('#purchaseOrderDate').val(data.purchaseOrderDate.substring(0,10));
                         $("#purchaseOrderDate").prop("disabled", true);
                         $("#purchaseOrderMemo").prop("disabled", true);
                         $('#ourCompanyrAddress').prop("disabled", true);
-                        var inspectionPlanDTOList= data.inspectionPlanDTOList;
-                        console.log("검수계획",inspectionPlanDTOList)
-                        console.log("검수계획개수",inspectionPlanDTOList.length)
-                        if ( inspectionPlanDTOList.length === 0) {
+                        console.log("검수계획개수",data.inspectionPlanCount)
+                        if ( data.inspectionPlanCount === 0) {
                             console.log("검수계획개수없음")
                             $('#content').html(`
                             <hr>
@@ -272,7 +244,6 @@
                             console.log("검수계획 있을떄! 이건 나중에 작업")
                         }
                     }
-
                 }).fail(function(jqxhr, textStatus, error) {
                     var err = textStatus + ", " + error;
                     console.log("발주 정보 요청 실패: " + err);
@@ -331,8 +302,7 @@
     <script th:inline="javascript">
         $('#orderAndDownload').click(function (){
             var purchaseOrderCode = [[${purchaseOrderCode}]];
-            var purchaserDTO={procurementPlanDTO : { procurementPlanCode : $('#procurementPlanCode').val()}
-                ,purchaseOrderCode: purchaseOrderCode , purchaseOrderDate: $('#purchaseOrderDate').val()+'T00:00:00.000000' , purchaseOrderMemo: $('#purchaseOrderMemo').val() , purchaseOrderStatus: "COMPLETED" };
+            var purchaserDTO={ purchaseOrderCode: purchaseOrderCode, purchaseOrderDate: $('#purchaseOrderDate').val()+'T00:00:00' , purchaseOrderMemo: $('#purchaseOrderMemo').val() , purchaseOrderStatus: "COMPLETED"};
             console.log("수집한데이터",purchaserDTO);
             $.ajax({
                 url:'/purchaseordercontent/'+purchaseOrderCode,

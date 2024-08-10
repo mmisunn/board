@@ -15,6 +15,7 @@ import site.junggam.procurement_system.repository.PurchaseOrderRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Log4j2
 @Service
@@ -25,13 +26,25 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService{
     private final PurchaseOrderMapper purchaseOrderMapper;
     private final InspectionPlanRepository inspectionPlanRepository;
 
+    private int getInspectionPlanCount(PurchaseOrder purchaseOrder) {
+        List<InspectionPlan> inspectionPlans = inspectionPlanRepository.findByPurchaseOrder(purchaseOrder);
+        int size = inspectionPlans.size();
+        return size;
+    }
+
     @Override
     @Transactional
     public List<PurchaseOrderDTO> getPurchaseOrderList() {
         try {
             List<PurchaseOrder> result = purchaseOrderRepository.findAll();
-            List<PurchaseOrderDTO> dtoList = purchaseOrderMapper.toDTOs(result);
-
+            List<PurchaseOrderDTO> dtoList = result.stream()
+                    .map(purchaseOrder -> {
+                        PurchaseOrderDTO dto = purchaseOrderMapper.toDTO(purchaseOrder);
+                        int inspectionPlanCount = getInspectionPlanCount(purchaseOrder);
+                        dto.setInspectionPlanCount(inspectionPlanCount);
+                        return dto;
+                    })
+                    .collect(Collectors.toList());
             return dtoList;
         } catch (Exception e) {
             log.error("에러메세지", e);
@@ -50,13 +63,8 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService{
 
             // PurchaseOrder를 DTO로 변환
             PurchaseOrderDTO purchaseOrderDTO = purchaseOrderMapper.toDTO(purchaseOrder);
-
-            // PurchaseOrder에 연관된 InspectionPlan을 조회하여 DTO로 변환
-            List<InspectionPlan> inspectionPlans = inspectionPlanRepository.findByPurchaseOrder(purchaseOrder);
-            List<InspectionPlanDTO> inspectionPlanDTOs = purchaseOrderMapper.toInspectionPlanDTOs(inspectionPlans);
-
-            // DTO에 InspectionPlanDTO 리스트 설정
-            purchaseOrderDTO.setInspectionPlanDTOList(inspectionPlanDTOs);
+            int inspectionPlanCount = getInspectionPlanCount(purchaseOrder);
+            purchaseOrderDTO.setInspectionPlanCount(inspectionPlanCount);
 
             return purchaseOrderDTO;
         } else {
@@ -64,11 +72,11 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService{
         }
     }
 
+
     @Override
     public void savePurchaseOrder(PurchaseOrderDTO purchaseOrderDTO) {
         Optional<PurchaseOrder> result
                 = purchaseOrderRepository.findById(purchaseOrderDTO.getPurchaseOrderCode());
-
         if(result.isPresent()) {
             PurchaseOrder purchaseOrder = result.get();
             purchaseOrder.changePurchaseOrderDate(purchaseOrderDTO.getPurchaseOrderDate());

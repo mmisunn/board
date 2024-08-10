@@ -22,9 +22,9 @@ public class PurchaseOrderServiceTests {
         System.out.println("여기다!!!!!!!!!!!!!!!!!!!!!!!");
         String purchaseOrderCode="PO1";
         PurchaseOrderDTO purchaseOrderDTO = purchaseOrderService.getPurchaseOrder(purchaseOrderCode);
-//        System.out.println(purchaseOrderDTO);
+        System.out.println(purchaseOrderDTO);
 //        System.out.println(purchaseOrderDTO.getProcurementPlanDTO());
-        System.out.println(purchaseOrderDTO.getInspectionPlanDTOList());
+//        System.out.println(purchaseOrderDTO.getInspectionPlanDTOList());
     }
 
     @Test

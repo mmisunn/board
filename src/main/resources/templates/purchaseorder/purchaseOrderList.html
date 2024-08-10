@@ -140,19 +140,19 @@
             console.log("자바스크립트작동")
             function getPurchaseOrderContent() {
                 $.getJSON("/purchaseordercontent/allList", function(arr) {
-                    // console.log("요청", arr);
+                    console.log("요청", arr);
                     var str ="";
                     $.each(arr,function (idx,dto) {
                         str += '<tr>'
                         str += '<th scope="row">'+(idx+1)+'</th>'
                         str += '<td>'+dto.purchaseOrderStatus+'</td>'
-                        str += '<td><a href="purchaseOrderGet?purchaseOrderCode='+dto.purchaseOrderCode+'">'+dto.procurementPlanDTO.temMaterialDTO.materialName+'</a></td>'
-                        str += '<td>'+dto.procurementPlanDTO.procurementPlanQuantity+'</td>'
-                        str += '<td>'+(dto.procurementPlanDTO.procurementPlanQuantity*dto.procurementPlanDTO.temMaterialDTO.contractDTO.contractPrice)+'</td>'
-                        str += '<td>'+dto.procurementPlanDTO.temMaterialDTO.contractDTO.purchaserDTO.purchaserName+'</td>'
-                        str += '<td>'+dto.inspectionPlanDTOList.length+'</td>'
+                        str += '<td><a href="purchaseOrderGet?purchaseOrderCode='+dto.purchaseOrderCode+'">'+dto.materialName+'</a></td>'
+                        str += '<td>'+dto.procurementPlanQuantity+'</td>'
+                        str += '<td>'+(dto.procurementPlanQuantity*dto.contractPrice)+'</td>'
+                        str += '<td>'+dto.purchaserName+'</td>'
+                        str += '<td>'+dto.inspectionPlanCount+'</td>'
                         str += '<td>'+dto.purchaseOrderDate+'</td>'
-                        str += '<td>'+dto.procurementPlanDTO.procurementPlanDeadLine+'</td>'
+                        str += '<td>'+dto.procurementPlanDeadLine+'</td>'
                         str += '</tr>'
                     })
                     console.log('이게 str',str)
