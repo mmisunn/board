@@ -30,14 +30,13 @@ function parseDate(dateString) {
 // 무한 스크롤 기능
 function setupInfiniteScroll(loadMoreDataCallback) {
     let isLoading = false;
-    let currentPage = 1;
 
     $(window).scroll(function() {
         if($(window).scrollTop() + $(window).height() >= $(document).height() - 10) {
-            if (!isLoading) {
+            if (!isLoading && currentPage <= totalPage) { // 수정된 코드: currentPage가 totalPage 이하인 경우에만 요청
                 isLoading = true;
                 currentPage++;
-                loadMoreDataCallback(currentPage).always(function() { // 수정된 코드: always 메서드 호출
+                loadMoreDataCallback(currentPage).always(function() {
                     isLoading = false;
                 });
             }
