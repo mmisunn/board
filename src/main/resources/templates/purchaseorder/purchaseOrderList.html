@@ -138,29 +138,29 @@
     <script th:inline="javascript">
         $(document).ready(function (e) {
             console.log("자바스크립트작동")
-            function getPurchaseOrderContent() {
-                $.getJSON("/purchaseordercontent/allList", function(arr) {
-                    console.log("요청", arr);
-                    var str ="";
-                    $.each(arr,function (idx,dto) {
-                        str += '<tr>'
-                        str += '<th scope="row">'+(idx+1)+'</th>'
-                        str += '<td>'+dto.purchaseOrderStatus+'</td>'
-                        str += '<td><a href="purchaseOrderGet?purchaseOrderCode='+dto.purchaseOrderCode+'">'+dto.materialName+'</a></td>'
-                        str += '<td>'+dto.procurementPlanQuantity+'</td>'
-                        str += '<td>'+(dto.procurementPlanQuantity*dto.contractPrice)+'</td>'
-                        str += '<td>'+dto.purchaserName+'</td>'
-                        str += '<td>'+dto.inspectionPlanCount+'</td>'
-                        str += '<td>'+dto.purchaseOrderDate+'</td>'
-                        str += '<td>'+dto.procurementPlanDeadLine+'</td>'
-                        str += '</tr>'
-                    })
-                    console.log('이게 str',str)
-                    $("#purchaseOrderList").html(str);
-                })
+            function getPurchaseOrderContent(page) {
+                return $.getJSON(`/purchaseordercontent/allList?page=${page}&size=10`, function(data) {
+                    console.log("요청", data);
+                    var str = "";
+                    $.each(data.dtoList, function(idx, dto) {
+                        str += '<tr>';
+                        str += '<th scope="row">' + ((page - 1) * data.size + idx + 1) + '</th>'; // 수정된 코드: 페이지에 따른 순번 계산
+                        str += '<td>' + escapeHtml(dto.purchaseOrderStatus) + '</td>';
+                        str += '<td><a href="purchaseOrderGet?purchaseOrderCode=' + dto.purchaseOrderCode + '">' + escapeHtml(dto.materialName) + '</a></td>';
+                        str += '<td>' + dto.procurementPlanQuantity + '</td>';
+                        str += '<td>' + (dto.procurementPlanQuantity * dto.contractPrice) + '</td>';
+                        str += '<td>' + escapeHtml(dto.purchaserName) + '</td>';
+                        str += '<td>' + dto.inspectionPlanCount + '</td>';
+                        str += '<td>' + dto.purchaseOrderDate + '</td>';
+                        str += '<td>' + dto.procurementPlanDeadLine + '</td>';
+                        str += '</tr>';
+                    });
+                    $("#purchaseOrderList").append(str); // 데이터를 덮어쓰지 않고 추가
+                });
             }
 
-            getPurchaseOrderContent();
+            getPurchaseOrderContent(1);
+            setupInfiniteScroll(getPurchaseOrderContent);
         })
     </script>
     <th:block th:replace="~{/fragments/bodyFragment::footer}"></th:block>

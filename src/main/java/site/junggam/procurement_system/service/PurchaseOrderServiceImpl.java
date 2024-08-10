@@ -3,8 +3,13 @@ package site.junggam.procurement_system.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import site.junggam.procurement_system.dto.InspectionPlanDTO;
+import site.junggam.procurement_system.dto.PageRequestDTO;
+import site.junggam.procurement_system.dto.PageResultDTO;
 import site.junggam.procurement_system.dto.PurchaseOrderDTO;
 import site.junggam.procurement_system.entity.InspectionPlan;
 import site.junggam.procurement_system.entity.PurchaseOrder;
@@ -15,6 +20,7 @@ import site.junggam.procurement_system.repository.PurchaseOrderRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Log4j2
@@ -34,18 +40,19 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService{
 
     @Override
     @Transactional
-    public List<PurchaseOrderDTO> getPurchaseOrderList() {
+    public PageResultDTO<PurchaseOrderDTO, PurchaseOrder> getPurchaseOrderList(PageRequestDTO pageRequestDTO) {
         try {
-            List<PurchaseOrder> result = purchaseOrderRepository.findAll();
-            List<PurchaseOrderDTO> dtoList = result.stream()
-                    .map(purchaseOrder -> {
-                        PurchaseOrderDTO dto = purchaseOrderMapper.toDTO(purchaseOrder);
-                        int inspectionPlanCount = getInspectionPlanCount(purchaseOrder);
-                        dto.setInspectionPlanCount(inspectionPlanCount);
-                        return dto;
-                    })
-                    .collect(Collectors.toList());
-            return dtoList;
+            Pageable pageable = pageRequestDTO.getPageable(Sort.by("purchaseOrderDate").descending());
+            Page<PurchaseOrder> result = purchaseOrderRepository.findAll(pageable);
+
+            Function<PurchaseOrder, PurchaseOrderDTO> fn = (purchaseOrder -> {
+                PurchaseOrderDTO dto = purchaseOrderMapper.toDTO(purchaseOrder);
+                int inspectionPlanCount = getInspectionPlanCount(purchaseOrder);
+                dto.setInspectionPlanCount(inspectionPlanCount);
+                return dto;
+            });
+
+            return new PageResultDTO<>(result, fn);
         } catch (Exception e) {
             log.error("에러메세지", e);
             throw e; // or handle the exception appropriately

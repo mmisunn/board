@@ -20,7 +20,7 @@ public class PurchaseOrderRepositoryTests {
 
     @Test
     public void insertPurchaseOrder(){
-        IntStream.rangeClosed(1,20).forEach(i->{
+        IntStream.rangeClosed(21,40).forEach(i->{
             PurchaseOrder purchaseOrder = PurchaseOrder.builder()
                     .purchaseOrderCode("PO"+i)
                     .purchaseOrderDate(LocalDateTime.now())
