@@ -179,6 +179,7 @@
             </div> <!--End row-->
         </section>
     </main>
+    <!-- End #main -->
     <!--이하 정보 불러오는 JS-->
     <script th:inline="javascript">
         $(document).ready(function (e) {
@@ -196,7 +197,6 @@
                     console.log("자사정보 요청 실패: " + err);
                 });
             }
-
 
             var purchaseOrderCode = [[${purchaseOrderCode}]];
 
@@ -348,7 +348,6 @@
         })
     </script>
     <!--이상 발주처리 및 다운로드 JS-->
-    <!-- End #main -->
     <th:block th:replace="~{/fragments/bodyFragment::footer}"></th:block>
     <th:block th:replace="~{/fragments/bodyFragment::js}"></th:block>
 </body>

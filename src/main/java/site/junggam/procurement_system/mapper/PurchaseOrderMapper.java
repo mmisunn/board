@@ -15,6 +15,8 @@ public interface PurchaseOrderMapper {
     @Mapping(source = "procurementPlan", target = "procurementPlanDTO")
     PurchaseOrderDTO toDTO(PurchaseOrder purchaseOrder);
 
+    List<PurchaseOrderDTO> toDTOs(List<PurchaseOrder> purchaseOrderList);
+
     @Mapping(source = "temMaterial", target = "temMaterialDTO")
     ProcurementPlanDTO toDTO(ProcurementPlan procurementPlan);
 
@@ -35,7 +37,6 @@ public interface PurchaseOrderMapper {
 
 //    @Mapping(source = "procurementPlanDTO.procurementPlanCode", target = "procurementPlan.procurementPlanCode")
     @Mapping(target = "purchaseOrderStatus",defaultValue = "PENDING")
-    @Mapping(target = "procurementPlan", ignore = true)
     PurchaseOrder toEntity(PurchaseOrderDTO purchaseOrderDTO);
 //
 //    @Mapping(source = "temMaterialDTO.materialCode", target = "temMaterial.materialCode")

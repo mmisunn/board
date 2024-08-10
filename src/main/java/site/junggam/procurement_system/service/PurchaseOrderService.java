@@ -1,13 +1,12 @@
 package site.junggam.procurement_system.service;
 
-import site.junggam.procurement_system.dto.ProcurementPlanDTO;
 import site.junggam.procurement_system.dto.PurchaseOrderDTO;
-import site.junggam.procurement_system.dto.TemMaterialDTO;
-import site.junggam.procurement_system.entity.ProcurementPlan;
-import site.junggam.procurement_system.entity.PurchaseOrder;
+
+import java.util.List;
 
 public interface PurchaseOrderService {
     //1. 발주서 목록보기
+    List<PurchaseOrderDTO> getPurchaseOrderList();
 
     //2-1 발주 상세보기
     PurchaseOrderDTO getPurchaseOrder(String purchaseOrderCode);

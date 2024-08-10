@@ -12,6 +12,7 @@ import site.junggam.procurement_system.mapper.PurchaseOrderMapper;
 import site.junggam.procurement_system.repository.InspectionPlanRepository;
 import site.junggam.procurement_system.repository.PurchaseOrderRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +24,20 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService{
     private final PurchaseOrderRepository purchaseOrderRepository;
     private final PurchaseOrderMapper purchaseOrderMapper;
     private final InspectionPlanRepository inspectionPlanRepository;
+
+    @Override
+    @Transactional
+    public List<PurchaseOrderDTO> getPurchaseOrderList() {
+        try {
+            List<PurchaseOrder> result = purchaseOrderRepository.findAll();
+            List<PurchaseOrderDTO> dtoList = purchaseOrderMapper.toDTOs(result);
+
+            return dtoList;
+        } catch (Exception e) {
+            log.error("에러메세지", e);
+            throw e; // or handle the exception appropriately
+        }
+    }
 
     @Override
     @Transactional
@@ -51,7 +66,17 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService{
 
     @Override
     public void savePurchaseOrder(PurchaseOrderDTO purchaseOrderDTO) {
-        purchaseOrderRepository.save(purchaseOrderMapper.toEntity(purchaseOrderDTO));
+        Optional<PurchaseOrder> result
+                = purchaseOrderRepository.findById(purchaseOrderDTO.getPurchaseOrderCode());
+
+        if(result.isPresent()) {
+            PurchaseOrder purchaseOrder = result.get();
+            purchaseOrder.changePurchaseOrderDate(purchaseOrderDTO.getPurchaseOrderDate());
+            purchaseOrder.changePurchaseOrderStatus(purchaseOrderDTO.getPurchaseOrderStatus());
+            purchaseOrder.changePurchaseOrderMemo(purchaseOrderDTO.getPurchaseOrderMemo());
+            purchaseOrderRepository.save(purchaseOrder);
+        }
+
     }
 
 

@@ -16,11 +16,12 @@ public class PurchaseOrderController {
 
     @RequestMapping("/purchaseOrderList")
     public void purchaseOrderList(){
-        log.info("발주리스트 나옴");
+        log.info("발주리스트 페이지 진입 완료");
+
     }
 
     @GetMapping("/purchaseOrderGet")
-    public void purchaseOrderget(@RequestParam("purchaseOrderCode") String purchaseOrderCode, Model model){
+    public void getPurchaseOrder(@RequestParam("purchaseOrderCode") String purchaseOrderCode, Model model){
         log.info("발주서 상세보기 컨트롤러");
         log.info("발주코드는 "+purchaseOrderCode);
         model.addAttribute("purchaseOrderCode",purchaseOrderCode);

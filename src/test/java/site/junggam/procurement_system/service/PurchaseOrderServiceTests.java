@@ -7,6 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import site.junggam.procurement_system.dto.PurchaseOrderDTO;
 import site.junggam.procurement_system.entity.PurchaseOrder;
 
+import java.util.List;
+
 
 @SpringBootTest
 public class PurchaseOrderServiceTests {
@@ -23,7 +25,15 @@ public class PurchaseOrderServiceTests {
 //        System.out.println(purchaseOrderDTO);
 //        System.out.println(purchaseOrderDTO.getProcurementPlanDTO());
         System.out.println(purchaseOrderDTO.getInspectionPlanDTOList());
+    }
 
+    @Test
+    @Transactional
+    public void getPurchaseOrders() {
+        List<PurchaseOrderDTO> purchaseOrderDTOList=purchaseOrderService.getPurchaseOrderList();
+        purchaseOrderDTOList.forEach(purchaseOrderDTO->{
+            System.out.println("여기야"+purchaseOrderDTO);
+        });
     }
 
 }

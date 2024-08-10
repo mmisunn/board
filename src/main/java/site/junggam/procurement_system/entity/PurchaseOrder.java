@@ -25,4 +25,10 @@ public class PurchaseOrder {
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private PurchaseOrderStatus purchaseOrderStatus = PurchaseOrderStatus.PENDING;
+
+    public void changePurchaseOrderStatus(PurchaseOrderStatus newStatus) { this.purchaseOrderStatus = newStatus; }
+
+    public void changePurchaseOrderDate(LocalDateTime newPurchaseOrderDate) { this.purchaseOrderDate= newPurchaseOrderDate; }
+
+    public void changePurchaseOrderMemo(String newPurchaseOrderMemo) { this.purchaseOrderMemo= newPurchaseOrderMemo; }
 }

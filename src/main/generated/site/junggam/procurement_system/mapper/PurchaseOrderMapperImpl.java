@@ -20,7 +20,7 @@ import site.junggam.procurement_system.entity.TemMaterial;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-08-09T19:08:16+0900",
+    date = "2024-08-10T13:02:19+0900",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.2 (Oracle Corporation)"
 )
 @Component
@@ -41,6 +41,20 @@ public class PurchaseOrderMapperImpl implements PurchaseOrderMapper {
         purchaseOrderDTO.purchaseOrderStatus( purchaseOrder.getPurchaseOrderStatus() );
 
         return purchaseOrderDTO.build();
+    }
+
+    @Override
+    public List<PurchaseOrderDTO> toDTOs(List<PurchaseOrder> purchaseOrderList) {
+        if ( purchaseOrderList == null ) {
+            return null;
+        }
+
+        List<PurchaseOrderDTO> list = new ArrayList<PurchaseOrderDTO>( purchaseOrderList.size() );
+        for ( PurchaseOrder purchaseOrder : purchaseOrderList ) {
+            list.add( toDTO( purchaseOrder ) );
+        }
+
+        return list;
     }
 
     @Override
