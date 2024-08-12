@@ -23,4 +23,6 @@ public class Notice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer noticeNumber;
 
+    private String noticeWriter;
+
 }

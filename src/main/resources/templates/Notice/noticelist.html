@@ -58,30 +58,36 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>관리자</td>
-                                <td><a href="/notice/noticeread">※ 여름휴가공지 ※</a></td>
-                                <td>2024-07-22</td>
+                            <tr th:each="notice : ${notices}">
+                                <td th:text="${notice.noticeNumber}"><a href="noticeread"></a></td>
+                                <td th:text="${notice.noticeWriter}"></td>
+                                <td th:text="${notice.noticeTitle}"></td>
+                                <td th:text="${notice.noticeRegDate}"></td>
                             </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>관리자</td>
-                                <td>2024 상반기 승진 안내<br></td>
-                                <td>2024-07-20</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>관리자</td>
-                                <td>시스템 업데이트 완료 안내<br></td>
-                                <td>2024-07-17</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>관리자</td>
-                                <td>시스템 업데이트 일정 안내<br></td>
-                                <td>2024-07-10</td>
-                            </tr>
+<!--                            <tr>-->
+<!--                                <th scope="row">1</th>-->
+<!--                                <td>관리자</td>-->
+<!--                                <td><a href="noticeread">※ 여름휴가공지 ※</a></td>-->
+<!--                                <td>2024-07-22</td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <th scope="row">2</th>-->
+<!--                                <td>관리자</td>-->
+<!--                                <td><a href="noticeread">2024 상반기 승진 안내</a><br></td>-->
+<!--                                <td>2024-07-20</td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <th scope="row">3</th>-->
+<!--                                <td>관리자</td>-->
+<!--                                <td><a href="noticeread">시스템 업데이트 완료 안내</a><br></td>-->
+<!--                                <td>2024-07-17</td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <th scope="row">4</th>-->
+<!--                                <td>관리자</td>-->
+<!--                                <td><a href="noticeread">시스템 업데이트 일정 안내</a><br></td>-->
+<!--                                <td>2024-07-10</td>-->
+<!--                            </tr>-->
 
                             </tbody>
                         </table>

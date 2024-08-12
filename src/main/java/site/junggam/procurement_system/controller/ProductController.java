@@ -129,8 +129,8 @@ public class ProductController {
                 .map(productService::entityToDTO) //this::entityToDTO
                 .collect(Collectors.toList());
 
-        //log.info("productDTOs : " + productDTOs);
-        //List<Product> allProducts = productService.findAllProducts();
+        // log.info("productDTOs : " + productDTOs);
+        // List<Product> allProducts = productService.findAllProducts();
 
         model.addAttribute("products", productDTOs);
 

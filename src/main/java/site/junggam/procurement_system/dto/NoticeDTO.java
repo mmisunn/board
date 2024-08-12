@@ -21,4 +21,6 @@ public class NoticeDTO {
 
     private Integer noticeNumber;
 
+    private String noticeWriter;
+
 }
