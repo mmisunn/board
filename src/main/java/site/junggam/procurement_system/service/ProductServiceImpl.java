@@ -8,6 +8,7 @@ import site.junggam.procurement_system.dto.ProductDTO;
 import site.junggam.procurement_system.entity.Product;
 import site.junggam.procurement_system.repository.ProductRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Log4j2
@@ -19,12 +20,34 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public String productRegister(ProductDTO productDTO) {
+    public String insertProduct(ProductDTO productDTO) {
         String newProductCode = generateNextProductCode();
+        productDTO.setProductName(productDTO.getProductName());
         productDTO.setProductCode(newProductCode);
         Product product = dtoToEntity(productDTO);
         Product saveProduct = productRepository.save(product);
         return saveProduct.getProductCode();
+    }
+
+    @Override
+    public void updateProduct(ProductDTO productDTO) {
+
+    }
+
+    @Override
+    public Product findProductByCode(String productCode) {
+        return null;
+    }
+
+    @Override
+    public List<Product> findAllProducts() {
+        //return List.of();
+        return productRepository.findAll(); // 실제 데이터 반환
+    }
+
+    @Override
+    public boolean deleteProduct(String productCode) {
+        return false;
     }
 
     //Next 제품코드 자동증가값 생성 메서드

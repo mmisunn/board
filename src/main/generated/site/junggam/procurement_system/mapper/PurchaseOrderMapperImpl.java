@@ -1,17 +1,21 @@
 package site.junggam.procurement_system.mapper;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
-import site.junggam.procurement_system.dto.ProcurementPlanDTO;
 import site.junggam.procurement_system.dto.PurchaseOrderDTO;
-import site.junggam.procurement_system.dto.TemMaterialDTO;
+import site.junggam.procurement_system.entity.Contract;
 import site.junggam.procurement_system.entity.ProcurementPlan;
 import site.junggam.procurement_system.entity.PurchaseOrder;
+import site.junggam.procurement_system.entity.PurchaseOrderStatus;
+import site.junggam.procurement_system.entity.Purchaser;
 import site.junggam.procurement_system.entity.TemMaterial;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-08-08T17:27:01+0900",
+    date = "2024-08-10T18:14:11+0900",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.2 (Oracle Corporation)"
 )
 @Component
@@ -25,50 +29,43 @@ public class PurchaseOrderMapperImpl implements PurchaseOrderMapper {
 
         PurchaseOrderDTO.PurchaseOrderDTOBuilder purchaseOrderDTO = PurchaseOrderDTO.builder();
 
-        purchaseOrderDTO.procurementPlanDTO( toDTO( purchaseOrder.getProcurementPlan() ) );
+        purchaseOrderDTO.procurementPlanDeadLine( purchaseOrderProcurementPlanProcurementPlanDeadLine( purchaseOrder ) );
+        Integer procurementPlanQuantity = purchaseOrderProcurementPlanProcurementPlanQuantity( purchaseOrder );
+        if ( procurementPlanQuantity != null ) {
+            purchaseOrderDTO.procurementPlanQuantity( procurementPlanQuantity );
+        }
+        purchaseOrderDTO.materialName( purchaseOrderProcurementPlanTemMaterialMaterialName( purchaseOrder ) );
+        purchaseOrderDTO.materialStand( purchaseOrderProcurementPlanTemMaterialMaterialStand( purchaseOrder ) );
+        purchaseOrderDTO.materialTexture( purchaseOrderProcurementPlanTemMaterialMaterialTexture( purchaseOrder ) );
+        Double contractPrice = purchaseOrderProcurementPlanTemMaterialContractContractPrice( purchaseOrder );
+        if ( contractPrice != null ) {
+            purchaseOrderDTO.contractPrice( contractPrice );
+        }
+        purchaseOrderDTO.purchaserName( purchaseOrderProcurementPlanTemMaterialContractPurchaserPurchaserName( purchaseOrder ) );
+        purchaseOrderDTO.purchaserManager( purchaseOrderProcurementPlanTemMaterialContractPurchaserPurchaserManager( purchaseOrder ) );
+        purchaseOrderDTO.purchaserManagerTel( purchaseOrderProcurementPlanTemMaterialContractPurchaserPurchaserManagerTel( purchaseOrder ) );
+        purchaseOrderDTO.purchaserManagerEmail( purchaseOrderProcurementPlanTemMaterialContractPurchaserPurchaserManagerEmail( purchaseOrder ) );
+        purchaseOrderDTO.purchaserManagerFax( purchaseOrderProcurementPlanTemMaterialContractPurchaserPurchaserManagerFax( purchaseOrder ) );
         purchaseOrderDTO.purchaseOrderCode( purchaseOrder.getPurchaseOrderCode() );
         purchaseOrderDTO.purchaseOrderDate( purchaseOrder.getPurchaseOrderDate() );
         purchaseOrderDTO.purchaseOrderMemo( purchaseOrder.getPurchaseOrderMemo() );
+        purchaseOrderDTO.purchaseOrderStatus( purchaseOrder.getPurchaseOrderStatus() );
 
         return purchaseOrderDTO.build();
     }
 
     @Override
-    public ProcurementPlanDTO toDTO(ProcurementPlan procurementPlan) {
-        if ( procurementPlan == null ) {
+    public List<PurchaseOrderDTO> toDTOs(List<PurchaseOrder> purchaseOrderList) {
+        if ( purchaseOrderList == null ) {
             return null;
         }
 
-        ProcurementPlanDTO.ProcurementPlanDTOBuilder procurementPlanDTO = ProcurementPlanDTO.builder();
-
-        procurementPlanDTO.temMaterialDTO( toDTO( procurementPlan.getTemMaterial() ) );
-        procurementPlanDTO.procurementPlanCode( procurementPlan.getProcurementPlanCode() );
-        procurementPlanDTO.procurementPlantRegDate( procurementPlan.getProcurementPlantRegDate() );
-        procurementPlanDTO.procurementPlanDeadLine( procurementPlan.getProcurementPlanDeadLine() );
-        procurementPlanDTO.procurementPlanQuantity( procurementPlan.getProcurementPlanQuantity() );
-
-        return procurementPlanDTO.build();
-    }
-
-    @Override
-    public TemMaterialDTO toDTO(TemMaterial temMaterial) {
-        if ( temMaterial == null ) {
-            return null;
+        List<PurchaseOrderDTO> list = new ArrayList<PurchaseOrderDTO>( purchaseOrderList.size() );
+        for ( PurchaseOrder purchaseOrder : purchaseOrderList ) {
+            list.add( toDTO( purchaseOrder ) );
         }
 
-        TemMaterialDTO.TemMaterialDTOBuilder temMaterialDTO = TemMaterialDTO.builder();
-
-        temMaterialDTO.materialCode( temMaterial.getMaterialCode() );
-        temMaterialDTO.materialName( temMaterial.getMaterialName() );
-        temMaterialDTO.materialStand( temMaterial.getMaterialStand() );
-        temMaterialDTO.materialTexture( temMaterial.getMaterialTexture() );
-        temMaterialDTO.materialDrawFile( temMaterial.getMaterialDrawFile() );
-        temMaterialDTO.materialEtcFile( temMaterial.getMaterialEtcFile() );
-        temMaterialDTO.materialRegDate( temMaterial.getMaterialRegDate() );
-        temMaterialDTO.materialModDate( temMaterial.getMaterialModDate() );
-        temMaterialDTO.materialSafeQuantity( temMaterial.getMaterialSafeQuantity() );
-
-        return temMaterialDTO.build();
+        return list;
     }
 
     @Override
@@ -79,7 +76,12 @@ public class PurchaseOrderMapperImpl implements PurchaseOrderMapper {
 
         PurchaseOrder.PurchaseOrderBuilder purchaseOrder = PurchaseOrder.builder();
 
-        purchaseOrder.procurementPlan( procurementPlanDTOToProcurementPlan( purchaseOrderDTO.getProcurementPlanDTO() ) );
+        if ( purchaseOrderDTO.getPurchaseOrderStatus() != null ) {
+            purchaseOrder.purchaseOrderStatus( purchaseOrderDTO.getPurchaseOrderStatus() );
+        }
+        else {
+            purchaseOrder.purchaseOrderStatus( PurchaseOrderStatus.PENDING );
+        }
         purchaseOrder.purchaseOrderCode( purchaseOrderDTO.getPurchaseOrderCode() );
         purchaseOrder.purchaseOrderDate( purchaseOrderDTO.getPurchaseOrderDate() );
         purchaseOrder.purchaseOrderMemo( purchaseOrderDTO.getPurchaseOrderMemo() );
@@ -87,76 +89,248 @@ public class PurchaseOrderMapperImpl implements PurchaseOrderMapper {
         return purchaseOrder.build();
     }
 
-    @Override
-    public ProcurementPlan toEntity(ProcurementPlanDTO procurementPlanDTO) {
-        if ( procurementPlanDTO == null ) {
+    private LocalDateTime purchaseOrderProcurementPlanProcurementPlanDeadLine(PurchaseOrder purchaseOrder) {
+        if ( purchaseOrder == null ) {
             return null;
         }
-
-        ProcurementPlan.ProcurementPlanBuilder procurementPlan = ProcurementPlan.builder();
-
-        procurementPlan.temMaterial( temMaterialDTOToTemMaterial( procurementPlanDTO.getTemMaterialDTO() ) );
-        procurementPlan.procurementPlanCode( procurementPlanDTO.getProcurementPlanCode() );
-        procurementPlan.procurementPlantRegDate( procurementPlanDTO.getProcurementPlantRegDate() );
-        procurementPlan.procurementPlanDeadLine( procurementPlanDTO.getProcurementPlanDeadLine() );
-        procurementPlan.procurementPlanQuantity( procurementPlanDTO.getProcurementPlanQuantity() );
-
-        return procurementPlan.build();
+        ProcurementPlan procurementPlan = purchaseOrder.getProcurementPlan();
+        if ( procurementPlan == null ) {
+            return null;
+        }
+        LocalDateTime procurementPlanDeadLine = procurementPlan.getProcurementPlanDeadLine();
+        if ( procurementPlanDeadLine == null ) {
+            return null;
+        }
+        return procurementPlanDeadLine;
     }
 
-    @Override
-    public TemMaterial toEntity(TemMaterialDTO temMaterialDTO) {
-        if ( temMaterialDTO == null ) {
+    private Integer purchaseOrderProcurementPlanProcurementPlanQuantity(PurchaseOrder purchaseOrder) {
+        if ( purchaseOrder == null ) {
             return null;
         }
-
-        TemMaterial.TemMaterialBuilder temMaterial = TemMaterial.builder();
-
-        temMaterial.materialCode( temMaterialDTO.getMaterialCode() );
-        temMaterial.materialName( temMaterialDTO.getMaterialName() );
-        temMaterial.materialStand( temMaterialDTO.getMaterialStand() );
-        temMaterial.materialTexture( temMaterialDTO.getMaterialTexture() );
-        temMaterial.materialDrawFile( temMaterialDTO.getMaterialDrawFile() );
-        temMaterial.materialEtcFile( temMaterialDTO.getMaterialEtcFile() );
-        temMaterial.materialRegDate( temMaterialDTO.getMaterialRegDate() );
-        temMaterial.materialModDate( temMaterialDTO.getMaterialModDate() );
-        temMaterial.materialSafeQuantity( temMaterialDTO.getMaterialSafeQuantity() );
-
-        return temMaterial.build();
+        ProcurementPlan procurementPlan = purchaseOrder.getProcurementPlan();
+        if ( procurementPlan == null ) {
+            return null;
+        }
+        Integer procurementPlanQuantity = procurementPlan.getProcurementPlanQuantity();
+        if ( procurementPlanQuantity == null ) {
+            return null;
+        }
+        return procurementPlanQuantity;
     }
 
-    protected ProcurementPlan procurementPlanDTOToProcurementPlan(ProcurementPlanDTO procurementPlanDTO) {
-        if ( procurementPlanDTO == null ) {
+    private String purchaseOrderProcurementPlanTemMaterialMaterialName(PurchaseOrder purchaseOrder) {
+        if ( purchaseOrder == null ) {
             return null;
         }
-
-        ProcurementPlan.ProcurementPlanBuilder procurementPlan = ProcurementPlan.builder();
-
-        procurementPlan.procurementPlanCode( procurementPlanDTO.getProcurementPlanCode() );
-        procurementPlan.procurementPlantRegDate( procurementPlanDTO.getProcurementPlantRegDate() );
-        procurementPlan.procurementPlanDeadLine( procurementPlanDTO.getProcurementPlanDeadLine() );
-        procurementPlan.procurementPlanQuantity( procurementPlanDTO.getProcurementPlanQuantity() );
-
-        return procurementPlan.build();
+        ProcurementPlan procurementPlan = purchaseOrder.getProcurementPlan();
+        if ( procurementPlan == null ) {
+            return null;
+        }
+        TemMaterial temMaterial = procurementPlan.getTemMaterial();
+        if ( temMaterial == null ) {
+            return null;
+        }
+        String materialName = temMaterial.getMaterialName();
+        if ( materialName == null ) {
+            return null;
+        }
+        return materialName;
     }
 
-    protected TemMaterial temMaterialDTOToTemMaterial(TemMaterialDTO temMaterialDTO) {
-        if ( temMaterialDTO == null ) {
+    private String purchaseOrderProcurementPlanTemMaterialMaterialStand(PurchaseOrder purchaseOrder) {
+        if ( purchaseOrder == null ) {
             return null;
         }
+        ProcurementPlan procurementPlan = purchaseOrder.getProcurementPlan();
+        if ( procurementPlan == null ) {
+            return null;
+        }
+        TemMaterial temMaterial = procurementPlan.getTemMaterial();
+        if ( temMaterial == null ) {
+            return null;
+        }
+        String materialStand = temMaterial.getMaterialStand();
+        if ( materialStand == null ) {
+            return null;
+        }
+        return materialStand;
+    }
 
-        TemMaterial.TemMaterialBuilder temMaterial = TemMaterial.builder();
+    private String purchaseOrderProcurementPlanTemMaterialMaterialTexture(PurchaseOrder purchaseOrder) {
+        if ( purchaseOrder == null ) {
+            return null;
+        }
+        ProcurementPlan procurementPlan = purchaseOrder.getProcurementPlan();
+        if ( procurementPlan == null ) {
+            return null;
+        }
+        TemMaterial temMaterial = procurementPlan.getTemMaterial();
+        if ( temMaterial == null ) {
+            return null;
+        }
+        String materialTexture = temMaterial.getMaterialTexture();
+        if ( materialTexture == null ) {
+            return null;
+        }
+        return materialTexture;
+    }
 
-        temMaterial.materialCode( temMaterialDTO.getMaterialCode() );
-        temMaterial.materialName( temMaterialDTO.getMaterialName() );
-        temMaterial.materialStand( temMaterialDTO.getMaterialStand() );
-        temMaterial.materialTexture( temMaterialDTO.getMaterialTexture() );
-        temMaterial.materialDrawFile( temMaterialDTO.getMaterialDrawFile() );
-        temMaterial.materialEtcFile( temMaterialDTO.getMaterialEtcFile() );
-        temMaterial.materialRegDate( temMaterialDTO.getMaterialRegDate() );
-        temMaterial.materialModDate( temMaterialDTO.getMaterialModDate() );
-        temMaterial.materialSafeQuantity( temMaterialDTO.getMaterialSafeQuantity() );
+    private Double purchaseOrderProcurementPlanTemMaterialContractContractPrice(PurchaseOrder purchaseOrder) {
+        if ( purchaseOrder == null ) {
+            return null;
+        }
+        ProcurementPlan procurementPlan = purchaseOrder.getProcurementPlan();
+        if ( procurementPlan == null ) {
+            return null;
+        }
+        TemMaterial temMaterial = procurementPlan.getTemMaterial();
+        if ( temMaterial == null ) {
+            return null;
+        }
+        Contract contract = temMaterial.getContract();
+        if ( contract == null ) {
+            return null;
+        }
+        Double contractPrice = contract.getContractPrice();
+        if ( contractPrice == null ) {
+            return null;
+        }
+        return contractPrice;
+    }
 
-        return temMaterial.build();
+    private String purchaseOrderProcurementPlanTemMaterialContractPurchaserPurchaserName(PurchaseOrder purchaseOrder) {
+        if ( purchaseOrder == null ) {
+            return null;
+        }
+        ProcurementPlan procurementPlan = purchaseOrder.getProcurementPlan();
+        if ( procurementPlan == null ) {
+            return null;
+        }
+        TemMaterial temMaterial = procurementPlan.getTemMaterial();
+        if ( temMaterial == null ) {
+            return null;
+        }
+        Contract contract = temMaterial.getContract();
+        if ( contract == null ) {
+            return null;
+        }
+        Purchaser purchaser = contract.getPurchaser();
+        if ( purchaser == null ) {
+            return null;
+        }
+        String purchaserName = purchaser.getPurchaserName();
+        if ( purchaserName == null ) {
+            return null;
+        }
+        return purchaserName;
+    }
+
+    private String purchaseOrderProcurementPlanTemMaterialContractPurchaserPurchaserManager(PurchaseOrder purchaseOrder) {
+        if ( purchaseOrder == null ) {
+            return null;
+        }
+        ProcurementPlan procurementPlan = purchaseOrder.getProcurementPlan();
+        if ( procurementPlan == null ) {
+            return null;
+        }
+        TemMaterial temMaterial = procurementPlan.getTemMaterial();
+        if ( temMaterial == null ) {
+            return null;
+        }
+        Contract contract = temMaterial.getContract();
+        if ( contract == null ) {
+            return null;
+        }
+        Purchaser purchaser = contract.getPurchaser();
+        if ( purchaser == null ) {
+            return null;
+        }
+        String purchaserManager = purchaser.getPurchaserManager();
+        if ( purchaserManager == null ) {
+            return null;
+        }
+        return purchaserManager;
+    }
+
+    private String purchaseOrderProcurementPlanTemMaterialContractPurchaserPurchaserManagerTel(PurchaseOrder purchaseOrder) {
+        if ( purchaseOrder == null ) {
+            return null;
+        }
+        ProcurementPlan procurementPlan = purchaseOrder.getProcurementPlan();
+        if ( procurementPlan == null ) {
+            return null;
+        }
+        TemMaterial temMaterial = procurementPlan.getTemMaterial();
+        if ( temMaterial == null ) {
+            return null;
+        }
+        Contract contract = temMaterial.getContract();
+        if ( contract == null ) {
+            return null;
+        }
+        Purchaser purchaser = contract.getPurchaser();
+        if ( purchaser == null ) {
+            return null;
+        }
+        String purchaserManagerTel = purchaser.getPurchaserManagerTel();
+        if ( purchaserManagerTel == null ) {
+            return null;
+        }
+        return purchaserManagerTel;
+    }
+
+    private String purchaseOrderProcurementPlanTemMaterialContractPurchaserPurchaserManagerEmail(PurchaseOrder purchaseOrder) {
+        if ( purchaseOrder == null ) {
+            return null;
+        }
+        ProcurementPlan procurementPlan = purchaseOrder.getProcurementPlan();
+        if ( procurementPlan == null ) {
+            return null;
+        }
+        TemMaterial temMaterial = procurementPlan.getTemMaterial();
+        if ( temMaterial == null ) {
+            return null;
+        }
+        Contract contract = temMaterial.getContract();
+        if ( contract == null ) {
+            return null;
+        }
+        Purchaser purchaser = contract.getPurchaser();
+        if ( purchaser == null ) {
+            return null;
+        }
+        String purchaserManagerEmail = purchaser.getPurchaserManagerEmail();
+        if ( purchaserManagerEmail == null ) {
+            return null;
+        }
+        return purchaserManagerEmail;
+    }
+
+    private String purchaseOrderProcurementPlanTemMaterialContractPurchaserPurchaserManagerFax(PurchaseOrder purchaseOrder) {
+        if ( purchaseOrder == null ) {
+            return null;
+        }
+        ProcurementPlan procurementPlan = purchaseOrder.getProcurementPlan();
+        if ( procurementPlan == null ) {
+            return null;
+        }
+        TemMaterial temMaterial = procurementPlan.getTemMaterial();
+        if ( temMaterial == null ) {
+            return null;
+        }
+        Contract contract = temMaterial.getContract();
+        if ( contract == null ) {
+            return null;
+        }
+        Purchaser purchaser = contract.getPurchaser();
+        if ( purchaser == null ) {
+            return null;
+        }
+        String purchaserManagerFax = purchaser.getPurchaserManagerFax();
+        if ( purchaserManagerFax == null ) {
+            return null;
+        }
+        return purchaserManagerFax;
     }
 }

@@ -6,36 +6,39 @@ import org.mapstruct.factory.Mappers;
 import site.junggam.procurement_system.dto.*;
 import site.junggam.procurement_system.entity.*;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface PurchaseOrderMapper {
     PurchaseOrderMapper INSTANCE = Mappers.getMapper(PurchaseOrderMapper.class);
 
-    @Mapping(source = "procurementPlan", target = "procurementPlanDTO")
+    @Mapping(source = "procurementPlan.procurementPlanDeadLine", target = "procurementPlanDeadLine")
+    @Mapping(source = "procurementPlan.procurementPlanQuantity", target = "procurementPlanQuantity")
+    @Mapping(source = "procurementPlan.temMaterial.materialName", target = "materialName")
+    @Mapping(source = "procurementPlan.temMaterial.materialStand", target = "materialStand")
+    @Mapping(source = "procurementPlan.temMaterial.materialTexture", target = "materialTexture")
+    @Mapping(source = "procurementPlan.temMaterial.contract.contractPrice", target = "contractPrice")
+    @Mapping(source = "procurementPlan.temMaterial.contract.purchaser.purchaserName", target = "purchaserName")
+    @Mapping(source = "procurementPlan.temMaterial.contract.purchaser.purchaserManager", target = "purchaserManager")
+    @Mapping(source = "procurementPlan.temMaterial.contract.purchaser.purchaserManagerTel", target = "purchaserManagerTel")
+    @Mapping(source = "procurementPlan.temMaterial.contract.purchaser.purchaserManagerEmail", target = "purchaserManagerEmail")
+    @Mapping(source = "procurementPlan.temMaterial.contract.purchaser.purchaserManagerFax", target = "purchaserManagerFax")
+    @Mapping(target = "inspectionPlanCount", ignore = true)
     PurchaseOrderDTO toDTO(PurchaseOrder purchaseOrder);
 
-    @Mapping(source = "temMaterial", target = "temMaterialDTO")
-    ProcurementPlanDTO toDTO(ProcurementPlan procurementPlan);
+    List<PurchaseOrderDTO> toDTOs(List<PurchaseOrder> purchaseOrderList);
 
-    @Mapping(source = "contract", target = "contractDTO")
-    TemMaterialDTO toDTO(TemMaterial temMaterial);
+//    @Mapping(source = "inspectionPlanDeliveryProgress", target = "inspectionPlanDeliveryProgress")
+//    @Mapping(source = "inspectionPlanStatus", target = "inspectionPlanStatus")
+//    @Mapping(target = "purchaseOrder", ignore = true)
+//    InspectionPlanDTO toInspectionPlanDTO(InspectionPlan inspectionPlan);
+//
+//    List<InspectionPlanDTO> toInspectionPlanDTOs(List<InspectionPlan> inspectionPlanList);
 
-    @Mapping(source = "purchaser", target = "purchaserDTO")
-    ContractDTO toDTO(Contract contract);
-
-    PurchaserDTO toDTO(PurchaserDTO purchaserDTO);
-
-//    @Mapping(source = "procurementPlanDTO.procurementPlanCode", target = "procurementPlan.procurementPlanCode")
     @Mapping(target = "purchaseOrderStatus",defaultValue = "PENDING")
     PurchaseOrder toEntity(PurchaseOrderDTO purchaseOrderDTO);
-//
-//    @Mapping(source = "temMaterialDTO.materialCode", target = "temMaterial.materialCode")
-//    ProcurementPlan toEntity(ProcurementPlanDTO procurementPlanDTO);
-//
-//    @Mapping(source = "contractDTO.contractCode", target = "contract.contractCode")
-//    TemMaterial toEntity(TemMaterialDTO temMaterialDTO);
-//
-//    @Mapping(source = "purchaserDTO.purchaserCode", target = "purchaser.purchaserCode")
-//    Contract toEntity(ContractDTO contractDTO);
-//
-//    Purchaser toEntity(PurchaserDTO purchaserDTO);
+
+
 }
+
+

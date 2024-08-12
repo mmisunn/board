@@ -27,7 +27,7 @@ public class ProductRestController {
         log.info("product insert test..");
         try {
             // 제품 등록 처리
-            String productCode = productService.productRegister(productDTO);
+            String productCode = productService.insertProduct(productDTO);
             return new ResponseEntity<>("Product registered successfully with code: " + productCode, HttpStatus.CREATED);
         } catch (Exception e) {
             log.error("Error occurred while registering product", e);

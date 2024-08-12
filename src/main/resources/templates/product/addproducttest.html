@@ -1,95 +1,21 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<!--    <meta name="csrf-token" content="${_csrf.token}">-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>제품 등록 테스트 페이지</title>
+    <title>제품등록 샘플 페이지</title>
 </head>
 <body>
-<h3>제품 등록 테스트 페이지</h3>
+제품등록 샘플 페이지
 <hr />
-<!-- method="post" action="/product/register" -->
-<form id="productForm" method="post" action="/product/register">
-<!--<form id="productForm">-->
-    <label for="product_name">Product Name:</label>
-    <input type="text" id="product_name" name="product_name" required><br><br>
-    <label for="product_price">Product Price:</label>
-    <input type="number" id="product_price" name="product_price" step="0.01" required><br><br>
-    <label for="product_stand">Product Stand:</label>
-    <input type="text" id="product_stand" name="product_stand"><br><br>
-    <label for="product_texture">Product Texture:</label>
-    <input type="text" id="product_texture" name="product_texture"><br><br>
-    <label for="product_draw_file">Product Draw File:</label>
-    <input type="text" id="product_draw_file" name="product_draw_file"><br><br>
-    <label for="product_etc_file">Product Etc File:</label>
-    <input type="text" id="product_etc_file" name="product_etc_file"><br><br>
-
-    <input type="text" name="product_reg_date" value="2024-08-08T15:33:50"><br><br>
-    <input type="text" name="product_mod_date" value="2024-08-08T15:33:50"><br><br>
-<!--    <button type="button" onclick="registerProduct()">Register Product</button>-->
-    <button type="submit">테스트 등록</button>
+<form name="addProduct" method="post" action="/product/register" enctype="multipart/form-data">
+    제품명: <input type="text" name="product_name"> <br />
+    단가: <input type="number" name="product_price"> <br />
+    규격: <input type="text" name="product_stand"> <br />
+    재질: <input type="text" name="product_texture"> <br />
+    도면: <input type="file" name="product_draw_file"> <br />
+    기타문서: <input type="file" name="product_etc_file"> <br />
+    <input type="submit" value="등록하기">
 </form>
-
-<script>
-    function formatDateForMariaDB(date) {
-        // Create a new Date object
-        const d = new Date(date);
-
-        // Extract the date components
-        const year = d.getFullYear();
-        const month = ('0' + (d.getMonth() + 1)).slice(-2); // Months are zero-based
-        const day = ('0' + d.getDate()).slice(-2);
-        const hours = ('0' + d.getHours()).slice(-2);
-        const minutes = ('0' + d.getMinutes()).slice(-2);
-        const seconds = ('0' + d.getSeconds()).slice(-2);
-
-        // Format to 'YYYY-MM-DD HH:MM:SS'
-        //return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-        return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
-    }
-
-    function registerProduct() {
-        const formData = new FormData(document.getElementById('productForm'));
-        const productDTO = {
-            productName: formData.get('product_name'),
-            productPrice: parseFloat(formData.get('product_price')),
-            productStand: formData.get('product_stand'),
-            productTexture: formData.get('product_texture'),
-            productDrawFile: formData.get('product_draw_file'),
-            productEtcFile: formData.get('product_etc_file'),
-            productRegDate: formatDateForMariaDB(new Date()), // Format for MariaDB
-            productModDate: formatDateForMariaDB(new Date())  // Format for MariaDB
-        };
-
-        // Create a new XMLHttpRequest object
-        const xhr = new XMLHttpRequest();
-
-        // Configure it: POST-request for the URL /product/register
-        xhr.open('POST', '/product/registerapi', true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        //xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
-
-        // Set up the callback for when the request completes
-        xhr.onload = function () {
-            if (xhr.status >= 200 && xhr.status < 300) {
-                // Request successful
-                alert(xhr.responseText);
-            } else {
-                // Request failed
-                alert('Failed to register product');
-            }
-        };
-
-        // Set up the callback for when the request fails
-        xhr.onerror = function () {
-            console.error('Error:', xhr.statusText);
-            alert('Error occurred');
-        };
-
-        // Convert the productDTO object to a JSON string and send it
-        xhr.send(JSON.stringify(productDTO));
-    }
-</script>
 </body>
 </html>

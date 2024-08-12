@@ -20,7 +20,7 @@ public class PurchaseOrderRepositoryTests {
 
     @Test
     public void insertPurchaseOrder(){
-        IntStream.rangeClosed(1,20).forEach(i->{
+        IntStream.rangeClosed(21,40).forEach(i->{
             PurchaseOrder purchaseOrder = PurchaseOrder.builder()
                     .purchaseOrderCode("PO"+i)
                     .purchaseOrderDate(LocalDateTime.now())
@@ -39,10 +39,11 @@ public class PurchaseOrderRepositoryTests {
         System.out.println("아래에 표시");
         Optional<PurchaseOrder> purchaseOrder=purchaseOrderRepository.findById(purchaseOrderCode);
         if(purchaseOrder.isPresent()){
-            System.out.println(purchaseOrder.get().getPurchaseOrderStatus());
-            System.out.println(purchaseOrder.get().getProcurementPlan().getProcurementPlanCode());
-            System.out.println(purchaseOrder.get().getProcurementPlan().getTemMaterial());
-            System.out.println(purchaseOrder.get().getProcurementPlan().getTemMaterial().getContract());
+//            System.out.println(purchaseOrder.get().getPurchaseOrderStatus());
+//            System.out.println(purchaseOrder.get().getProcurementPlan().getProcurementPlanCode());
+//            System.out.println(purchaseOrder.get().getProcurementPlan().getTemMaterial());
+//            System.out.println(purchaseOrder.get().getProcurementPlan().getTemMaterial().getContract());
+            System.out.println(purchaseOrder.get());
         }
     }
 

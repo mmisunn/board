@@ -1,8 +1,6 @@
 package site.junggam.procurement_system.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
 
@@ -22,6 +20,7 @@ public class Notice {
     private LocalDateTime noticeRegDate;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer noticeNumber;
 
 }
