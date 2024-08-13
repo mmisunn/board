@@ -21,9 +21,9 @@ public class DeptNotice {
     private LocalDateTime deptNoticeRegDate;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer deptNoticeNumber;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "memberId")
-    private Member member;
+    private String deptNoticeWriter;
+
 }

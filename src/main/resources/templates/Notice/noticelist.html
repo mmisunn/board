@@ -37,7 +37,7 @@
 
 
 
-                        <h7 class="text" 제목검색</h7>
+                        <h7 class="text"> 제목검색</h7>
 
 
                         <input title="검색" type="text">
@@ -58,8 +58,8 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="notice : ${notices}">
-                                <td th:text="${notice.noticeNumber}"><a href="noticeread"></a></td>
+                            <tr th:each="notice : ${noticelist}">
+                                <a href="noticeread"><td th:text="${notice.noticeNumber}"></a></td>
                                 <td th:text="${notice.noticeWriter}"></td>
                                 <td th:text="${notice.noticeTitle}"></td>
                                 <td th:text="${notice.noticeRegDate}"></td>
@@ -130,7 +130,7 @@
                             <tr>
                                 <th scope="row">1</th>
                                 <td>생산부서 김길동</td>
-                                <td><a href="/deptnotice/deptnoticeread">생산부서 생산 요청 완료<br></td>
+                                <td><a href="/deptnotice/deptnoticeread">생산부서 생산 요청 완료<br></a></td>
                                 <td>2024-07-20</td>
                             </tr>
                             <tr>
@@ -159,7 +159,7 @@
                     </div>
                 </div>
             </div>
-    </section>
+        </div> </section>
 </main>
         </div> <!--End row-->
     </section>

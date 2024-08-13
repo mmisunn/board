@@ -1,14 +1,35 @@
 package site.junggam.procurement_system.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import site.junggam.procurement_system.dto.NoticeDTO;
 import site.junggam.procurement_system.entity.Notice;
+import site.junggam.procurement_system.repository.NoticeRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public interface NoticeService {
-    // 공지사항 리스트 보기
-    List<Notice> getNoticeList();
+@Service
+public class NoticeService {
 
-    // 공지사항 상세보기
-    NoticeDTO getNoticeRead(Integer noticeNumber);
+    @Autowired
+    private NoticeRepository noticeRepository;
+
+    public NoticeService(NoticeRepository noticeRepository) {
+        this.noticeRepository = noticeRepository;
+    }
+
+    public List<NoticeDTO> getNoticeList() {
+        List<Notice> notices = noticeRepository.findAll();
+        List<NoticeDTO> noticeDTOList = new ArrayList<>();
+
+        for (Notice notice : notices) {
+            NoticeDTO noticeDTO = NoticeDTO.builder().noticeNumber(notice.getNoticeNumber())
+                    .noticeWriter(notice.getNoticeWriter()).noticeTitle(notice.getNoticeTitle())
+                    .noticeRegDate(notice.getNoticeRegDate()).build();
+            noticeDTOList.add(noticeDTO);
+        }
+        return noticeDTOList;
+    }
+
 }

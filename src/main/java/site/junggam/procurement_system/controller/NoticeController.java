@@ -18,18 +18,18 @@ import java.util.stream.Collectors;
 @Controller
 @Log4j2
 @RequestMapping("/notice")
-@RequiredArgsConstructor
 public class NoticeController {
 
-    private final NoticeService noticeService;
+    private NoticeService noticeService;
+
+    public NoticeController(NoticeService noticeService) {
+        this.noticeService = noticeService;
+    }
 
     @GetMapping("/noticelist")
-    public String getNoticelist(Model model) {
-        log.info("전체공지사항목록, 부서알림게시판등록");
-        List<Notice> notices = noticeService.getNoticeList();
-        List<NoticeDTO> noticeDTOS = notices.stream()
-                        .map(noticeService::getNoticeList).collect(Collectors.toList());
-        model.addAttribute("notices", noticeDTOS);
+    public String noticelist(Model model) {
+        List<NoticeDTO> noticeDTOList = noticeService.getNoticeList();
+        model.addAttribute("noticelist", noticeDTOList);
 
         return "notice/noticelist";
     }
