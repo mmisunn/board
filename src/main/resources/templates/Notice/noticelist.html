@@ -59,7 +59,7 @@
                             </thead>
                             <tbody>
                             <tr th:each="notice : ${noticelist}">
-                                <a href="noticeread"><td th:text="${notice.noticeNumber}"></a></td>
+                                <td><a href="@{/noticeread/{noticeNumber}(noticeNumber=${notice.noticeNumber})}" th:text="${notice.noticeNumber}"></a></td>
                                 <td th:text="${notice.noticeWriter}"></td>
                                 <td th:text="${notice.noticeTitle}"></td>
                                 <td th:text="${notice.noticeRegDate}"></td>
@@ -127,30 +127,36 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>생산부서 김길동</td>
-                                <td><a href="/deptnotice/deptnoticeread">생산부서 생산 요청 완료<br></a></td>
-                                <td>2024-07-20</td>
+                            <tr th:each="deptnotice : ${noticelist}">
+                                <a href="deptnoticeread"><td th:text="${deptnotice.deptnoticeNumber}"></a></td>
+                                <td th:text="${deptnotice.deptnoticeWriter}"></td>
+                                <td th:text="${deptnotice.deptnoticeTitle}"></td>
+                                <td th:text="${deptnotice.deptnoticeRegDate}"></td>
                             </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>구매부서 최길동</td>
-                                <td>PSKD-45o0 구매 발주 시작<br></td>
-                                <td>2024-07-15</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>자재부서 박길동</td>
-                                <td>개발자들은 intp래요<br></td>
-                                <td>2024-07-13</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>자재부서 최길동</td>
-                                <td>int p;... ...<br></td>
-                                <td>2024-07-10</td>
-                            </tr>
+<!--                            <tr>-->
+<!--                                <th scope="row">1</th>-->
+<!--                                <td>생산부서 김길동</td>-->
+<!--                                <td><a href="/deptnotice/deptnoticeread">생산부서 생산 요청 완료<br></a></td>-->
+<!--                                <td>2024-07-20</td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <th scope="row">2</th>-->
+<!--                                <td>구매부서 최길동</td>-->
+<!--                                <td>PSKD-45o0 구매 발주 시작<br></td>-->
+<!--                                <td>2024-07-15</td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <th scope="row">3</th>-->
+<!--                                <td>자재부서 박길동</td>-->
+<!--                                <td>개발자들은 intp래요<br></td>-->
+<!--                                <td>2024-07-13</td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <th scope="row">4</th>-->
+<!--                                <td>자재부서 최길동</td>-->
+<!--                                <td>intp : ... ...<br></td>-->
+<!--                                <td>2024-07-10</td>-->
+<!--                            </tr>-->
 
                             </tbody>
                         </table>

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import site.junggam.procurement_system.entity.Notice;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @SpringBootTest
@@ -20,7 +21,7 @@ public class NoticeRepositoryTests {
                         "\n" +
                         "\n" +
                         "감사합니다.")
-                .noticeRegDate(LocalDateTime.now()).noticeTitle("시스템 업데이트 완료 안내")
+                .noticeRegDate(LocalDate.now()).noticeTitle("시스템 업데이트 완료 안내")
                 .noticeWriter("관리자").build();
         noticeRepository.save(notice);
     }

@@ -3,6 +3,7 @@ package site.junggam.procurement_system.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -12,13 +13,14 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @NoArgsConstructor
+@Getter
 public class DeptNotice {
 
     private String deptNoticeTitle;
 
     private String deptNoticeContent;
 
-    private LocalDateTime deptNoticeRegDate;
+    private LocalDate deptNoticeRegDate = LocalDate.now();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
