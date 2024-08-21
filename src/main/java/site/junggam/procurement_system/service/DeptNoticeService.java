@@ -1,6 +1,8 @@
 package site.junggam.procurement_system.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import site.junggam.procurement_system.dto.DeptNoticeDTO;
 import site.junggam.procurement_system.entity.DeptNotice;
@@ -10,26 +12,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class DeptNoticeService {
 
-    @Autowired
-    private DeptNoticeRepository deptNoticeRepository;
+    private final DeptNoticeRepository deptNoticeRepository;
 
-    public DeptNoticeService(DeptNoticeRepository deptNoticeRepository) {
-        this.deptNoticeRepository = deptNoticeRepository;
+    public void register(DeptNotice deptNotice) {
+        deptNoticeRepository.save(deptNotice);
     }
 
-    public List<DeptNoticeDTO> getDeptNoticeList() {
-        List<DeptNotice> deptNotices = deptNoticeRepository.findAll();
-        List<DeptNoticeDTO> deptNoticeDTOList = new ArrayList<>();
+    public List<DeptNotice> list() {
+        return deptNoticeRepository.findAll(Sort.by(Sort.Direction.ASC, "deptNoticeNumber"));
+    }
 
-        for (DeptNotice deptNotice : deptNotices) {
-            DeptNoticeDTO deptNoticeDTO = DeptNoticeDTO.builder().deptNoticeNumber(deptNotice.getDeptNoticeNumber())
-                    .deptNoticeWriter(deptNotice.getDeptNoticeWriter()).deptNoticeTitle(deptNotice.getDeptNoticeTitle())
-                    .deptNoticeRegDate(deptNotice.getDeptNoticeRegDate()).build();
-            deptNoticeDTOList.add(deptNoticeDTO);
-        }
-        return deptNoticeDTOList;
+    public DeptNotice read(int deptNoticeNumber) {
+        return deptNoticeRepository.findById(deptNoticeNumber).orElse(null);
+    }
+
+    public void modify(DeptNotice deptNotice) {
+        deptNoticeRepository.save(deptNotice);
+    }
+
+    public void delete(int deptNoticeNumber) {
+        deptNoticeRepository.deleteById(deptNoticeNumber);
     }
 
 }

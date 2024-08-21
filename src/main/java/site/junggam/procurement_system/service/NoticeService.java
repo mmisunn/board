@@ -1,53 +1,37 @@
 package site.junggam.procurement_system.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import site.junggam.procurement_system.dto.NoticeDTO;
 import site.junggam.procurement_system.entity.Notice;
 import site.junggam.procurement_system.repository.NoticeRepository;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
+@RequiredArgsConstructor
 public class NoticeService {
 
-    @Autowired
-    private NoticeRepository noticeRepository;
+    private final NoticeRepository noticeRepository;
 
-    public NoticeService(NoticeRepository noticeRepository) {
-        this.noticeRepository = noticeRepository;
+    public void register(Notice notice) {
+        noticeRepository.save(notice);
     }
 
-    public List<NoticeDTO> getNoticeList() {
-        List<Notice> notices = noticeRepository.findAll();
-        List<NoticeDTO> noticeDTOList = new ArrayList<>();
-
-        for (Notice notice : notices) {
-            NoticeDTO noticeDTO = NoticeDTO.builder().noticeNumber(notice.getNoticeNumber())
-                    .noticeWriter(notice.getNoticeWriter()).noticeTitle(notice.getNoticeTitle())
-                    .noticeRegDate(notice.getNoticeRegDate()).build();
-            noticeDTOList.add(noticeDTO);
-        }
-        return noticeDTOList;
+    public List<Notice> list(int page) {
+        return noticeRepository.findAll(PageRequest.of(page, 4, Sort.by(Sort.Direction.ASC, "noticeNumber")));
     }
 
-    @Transactional
-    public NoticeDTO getread(Integer noticeNumber) {
-        Optional<Notice> noticeWrapper = noticeRepository.findById(noticeNumber);
-        Notice notice = noticeWrapper.get();
-
-        NoticeDTO noticeDTO = NoticeDTO.builder()
-                .noticeNumber(notice.getNoticeNumber())
-                .noticeTitle(notice.getNoticeTitle())
-                .noticeWriter(notice.getNoticeWriter())
-                .noticeContent(notice.getNoticeContent())
-                .noticeRegDate(notice.getNoticeRegDate())
-                .build();
-
-        return noticeDTO;
+    public Notice read(int noticeNumber) {
+        return noticeRepository.findById(noticeNumber).orElse(null);
     }
 
+    public void modify(Notice notice) {
+        noticeRepository.save(notice);
+    }
+
+    public void delete(int noticeNumber) {
+        noticeRepository.deleteById(noticeNumber);
+    }
 }

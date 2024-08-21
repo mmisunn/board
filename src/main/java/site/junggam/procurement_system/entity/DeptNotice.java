@@ -2,8 +2,9 @@ package site.junggam.procurement_system.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -16,16 +17,21 @@ import java.time.LocalDateTime;
 @Getter
 public class DeptNotice {
 
+    @Id
+    @GeneratedValue
+    private Integer deptNoticeNumber;
+
     private String deptNoticeTitle;
 
     private String deptNoticeContent;
 
-    private LocalDate deptNoticeRegDate = LocalDate.now();
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer deptNoticeNumber;
-
     private String deptNoticeWriter;
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime deptNoticeRegDate;
+
+    @UpdateTimestamp
+    private LocalDateTime deptUpdateDate;
 
 }

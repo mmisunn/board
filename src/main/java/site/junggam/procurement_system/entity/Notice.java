@@ -2,10 +2,10 @@ package site.junggam.procurement_system.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "tbl_notice_board")
@@ -17,16 +17,21 @@ import java.time.format.DateTimeFormatter;
 @Getter
 public class Notice {
 
+    @Id
+    @GeneratedValue
+    private Integer noticeNumber;
+
     private String noticeTitle;
 
     private String noticeContent;
 
-    private LocalDate noticeRegDate = LocalDate.now();
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer noticeNumber;
-
     private String noticeWriter;
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime noticeRegDate;
+
+    @UpdateTimestamp
+    private LocalDateTime updateDate;
 
 }

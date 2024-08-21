@@ -21,7 +21,7 @@ public class NoticeRepositoryTests {
                         "\n" +
                         "\n" +
                         "감사합니다.")
-                .noticeRegDate(LocalDate.now()).noticeTitle("시스템 업데이트 완료 안내")
+                .noticeRegDate(LocalDateTime.now()).noticeTitle("시스템 업데이트 완료 안내")
                 .noticeWriter("관리자").build();
         noticeRepository.save(notice);
     }

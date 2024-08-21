@@ -44,7 +44,8 @@
                         &nbsp
                         <button type="button" class="btn btn-primary btn-sm">검색</button>
                         &nbsp
-                        <button type="button" class="btn btn-primary btn-sm">글쓰기</button>
+                        <a href="noticeregister" class="register">
+                            <button type="button" class="btn btn-primary btn-sm">글쓰기</button></a>
                         &nbsp
 
                         <!-- Table with hoverable rows -->
@@ -58,37 +59,13 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="notice : ${noticelist}">
-                                <td><a href="@{/noticeread/{noticeNumber}(noticeNumber=${notice.noticeNumber})}" th:text="${notice.noticeNumber}"></a></td>
+                            <tr th:each="notice : ${notice}">
+                                <td th:text="${notice.noticeNumber}"></td>
                                 <td th:text="${notice.noticeWriter}"></td>
-                                <td th:text="${notice.noticeTitle}"></td>
-                                <td th:text="${notice.noticeRegDate}"></td>
+                                <td><a th:href="@{/notice/noticeread/{noticeNumber}(noticeNumber=${notice.noticeNumber})}"
+                                       th:text="${notice.noticeTitle}"></a></td>
+                                <td th:text="${#temporals.format(notice.noticeRegDate, 'yyyy-MM-dd HH:mm')}"></td>
                             </tr>
-<!--                            <tr>-->
-<!--                                <th scope="row">1</th>-->
-<!--                                <td>관리자</td>-->
-<!--                                <td><a href="noticeread">※ 여름휴가공지 ※</a></td>-->
-<!--                                <td>2024-07-22</td>-->
-<!--                            </tr>-->
-<!--                            <tr>-->
-<!--                                <th scope="row">2</th>-->
-<!--                                <td>관리자</td>-->
-<!--                                <td><a href="noticeread">2024 상반기 승진 안내</a><br></td>-->
-<!--                                <td>2024-07-20</td>-->
-<!--                            </tr>-->
-<!--                            <tr>-->
-<!--                                <th scope="row">3</th>-->
-<!--                                <td>관리자</td>-->
-<!--                                <td><a href="noticeread">시스템 업데이트 완료 안내</a><br></td>-->
-<!--                                <td>2024-07-17</td>-->
-<!--                            </tr>-->
-<!--                            <tr>-->
-<!--                                <th scope="row">4</th>-->
-<!--                                <td>관리자</td>-->
-<!--                                <td><a href="noticeread">시스템 업데이트 일정 안내</a><br></td>-->
-<!--                                <td>2024-07-10</td>-->
-<!--                            </tr>-->
-
                             </tbody>
                         </table>
                         <!-- End Table with hoverable rows -->
@@ -113,7 +90,7 @@
                         <button type="button" class="btn btn-primary btn-sm">검색</button>
                         &nbsp
 
-                        <button type="button" class="btn btn-primary btn-sm">글쓰기</button>
+                        <a href="/deptnotice/deptnoticeregister" class="deptregister"><button type="button" class="btn btn-primary btn-sm">글쓰기</button></a>
                         &nbsp
 
                         <!-- Table with hoverable rows -->
@@ -127,37 +104,13 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="deptnotice : ${noticelist}">
-                                <a href="deptnoticeread"><td th:text="${deptnotice.deptnoticeNumber}"></a></td>
-                                <td th:text="${deptnotice.deptnoticeWriter}"></td>
-                                <td th:text="${deptnotice.deptnoticeTitle}"></td>
-                                <td th:text="${deptnotice.deptnoticeRegDate}"></td>
+                            <tr th:each="deptnotice : ${deptnotice}">
+                                <td th:text="${deptnotice.deptNoticeNumber}"></td>
+                                <td th:text="${deptnotice.deptNoticeWriter}"></td>
+                                <td><a th:href="@{/deptnotice/deptnoticeread/{deptNoticeNumber}(deptNoticeNumber=${deptnotice.deptNoticeNumber})}"
+                                       th:text="${deptnotice.deptNoticeTitle}"></a></td>
+                                <td th:text="${#temporals.format(deptnotice.deptNoticeRegDate, 'yyyy-MM-dd HH:mm')}"></td>
                             </tr>
-<!--                            <tr>-->
-<!--                                <th scope="row">1</th>-->
-<!--                                <td>생산부서 김길동</td>-->
-<!--                                <td><a href="/deptnotice/deptnoticeread">생산부서 생산 요청 완료<br></a></td>-->
-<!--                                <td>2024-07-20</td>-->
-<!--                            </tr>-->
-<!--                            <tr>-->
-<!--                                <th scope="row">2</th>-->
-<!--                                <td>구매부서 최길동</td>-->
-<!--                                <td>PSKD-45o0 구매 발주 시작<br></td>-->
-<!--                                <td>2024-07-15</td>-->
-<!--                            </tr>-->
-<!--                            <tr>-->
-<!--                                <th scope="row">3</th>-->
-<!--                                <td>자재부서 박길동</td>-->
-<!--                                <td>개발자들은 intp래요<br></td>-->
-<!--                                <td>2024-07-13</td>-->
-<!--                            </tr>-->
-<!--                            <tr>-->
-<!--                                <th scope="row">4</th>-->
-<!--                                <td>자재부서 최길동</td>-->
-<!--                                <td>intp : ... ...<br></td>-->
-<!--                                <td>2024-07-10</td>-->
-<!--                            </tr>-->
-
                             </tbody>
                         </table>
                         <!-- End Table with hoverable rows -->
