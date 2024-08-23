@@ -1,11 +1,13 @@
 package site.junggam.procurement_system.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import site.junggam.procurement_system.entity.Notice;
 import site.junggam.procurement_system.repository.NoticeRepository;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -19,8 +21,8 @@ public class NoticeService {
         noticeRepository.save(notice);
     }
 
-    public List<Notice> list(int page) {
-        return noticeRepository.findAll(PageRequest.of(page, 4, Sort.by(Sort.Direction.ASC, "noticeNumber")));
+    public List<Notice> list() {
+        return noticeRepository.findAll(Sort.by(Sort.Direction.DESC, "noticeNumber"));
     }
 
     public Notice read(int noticeNumber) {
@@ -34,4 +36,5 @@ public class NoticeService {
     public void delete(int noticeNumber) {
         noticeRepository.deleteById(noticeNumber);
     }
+
 }

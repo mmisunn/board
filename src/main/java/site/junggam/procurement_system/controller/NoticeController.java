@@ -3,6 +3,9 @@ package site.junggam.procurement_system.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,12 +26,9 @@ public class NoticeController {
     private final DeptNoticeService deptNoticeService;
 
     @GetMapping("/noticelist")
-    public String noticelist(Model model, @RequestParam(required = false, defaultValue = "0", value = "page") int page) {
+    public String noticelist(Model model) {
         log.info("공지사항 목록");
-        Page<Notice> listPage = noticeService.list(page);
-        int totalPage = listPage.getTotalPages();
-        model.addAttribute("notice", listPage.getContent());
-        model.addAttribute("totalPage", totalPage);
+        model.addAttribute("notice", noticeService.list());
         // log.info("보낼데이터"+noticeService.list());
         model.addAttribute("deptnotice", deptNoticeService.list());
         // log.info("데이터" + deptNoticeService.list());
@@ -72,4 +72,13 @@ public class NoticeController {
         noticeService.delete(noticeNumber);
         return "notice/noticelist";
     }
+
+//    @GetMapping("notice/noticesearch")
+//    public String noticesearch(@RequestParam(value = "keyword") String keyword, Model model) {
+//        List<Notice> noticeList = noticeService.searchPosts(keyword);
+//        model.addAttribute("noticelist", noticeList);
+//        return "notice/noticelist";
+//    }
+
+
 }

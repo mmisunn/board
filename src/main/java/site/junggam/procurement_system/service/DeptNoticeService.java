@@ -22,7 +22,7 @@ public class DeptNoticeService {
     }
 
     public List<DeptNotice> list() {
-        return deptNoticeRepository.findAll(Sort.by(Sort.Direction.ASC, "deptNoticeNumber"));
+        return deptNoticeRepository.findAll(Sort.by(Sort.Direction.DESC, "deptNoticeNumber"));
     }
 
     public DeptNotice read(int deptNoticeNumber) {

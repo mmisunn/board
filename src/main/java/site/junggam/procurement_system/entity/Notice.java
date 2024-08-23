@@ -15,10 +15,11 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 @Getter
+@Data
 public class Notice {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer noticeNumber;
 
     private String noticeTitle;
