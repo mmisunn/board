@@ -8,6 +8,6 @@ import site.junggam.procurement_system.entity.Notice;
 @Repository
 public interface NoticeRepository extends JpaRepository<Notice, Integer> {
 
-    Page
+
 
 }

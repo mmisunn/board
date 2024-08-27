@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -27,9 +28,9 @@ public class DeptNotice {
 
     private String deptNoticeWriter;
 
-    @CreationTimestamp
-    @Column(updatable = false)
-    private LocalDateTime deptNoticeRegDate;
+//    @CreationTimestamp
+//    @Column(updatable = false)
+    private LocalDate deptNoticeRegDate;
 
     @UpdateTimestamp
     private LocalDateTime deptUpdateDate;

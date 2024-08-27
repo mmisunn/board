@@ -9,6 +9,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import site.junggam.procurement_system.entity.DeptNotice;
 import site.junggam.procurement_system.entity.Notice;
 import site.junggam.procurement_system.service.DeptNoticeService;
 import site.junggam.procurement_system.service.NoticeService;
@@ -80,5 +81,15 @@ public class NoticeController {
 //        return "notice/noticelist";
 //    }
 
+    @GetMapping("/deptnoticeregister")
+    public String deptnoticeregister() {
+        log.info("부서 알림 등록");
+        return "deptnotice/deptnoticeregister";
+    }
 
+    @PostMapping("/deptnoticeregister")
+    public String deptregisterpost(DeptNotice deptNotice) {
+        deptNoticeService.register(deptNotice);
+        return "redirect:/notice/noticelist";
+    }
 }

@@ -26,7 +26,8 @@ public class NoticeService {
     }
 
     public Notice read(int noticeNumber) {
-        return noticeRepository.findById(noticeNumber).orElse(null);
+//        return noticeRepository.findById(noticeNumber).orElse(null);
+        return noticeRepository.findById(noticeNumber).get();
     }
 
     public void modify(Notice notice) {
