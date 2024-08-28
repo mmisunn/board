@@ -2,11 +2,8 @@ package site.junggam.procurement_system.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tbl_dept_notice_board")
@@ -19,7 +16,7 @@ import java.time.LocalDateTime;
 public class DeptNotice {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer deptNoticeNumber;
 
     private String deptNoticeTitle;
@@ -28,11 +25,8 @@ public class DeptNotice {
 
     private String deptNoticeWriter;
 
-//    @CreationTimestamp
-//    @Column(updatable = false)
     private LocalDate deptNoticeRegDate;
 
-    @UpdateTimestamp
-    private LocalDateTime deptUpdateDate;
+    private LocalDate deptNoticeUpdateDate;
 
 }

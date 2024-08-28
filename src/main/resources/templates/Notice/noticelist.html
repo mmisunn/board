@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>공지사항</title>
+    <title>공지사항 목록</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -35,8 +35,6 @@
                     <div class="card-body">
                         <b><h5 class="card-title"><strong>전체 공지사항</strong> </h5></b>
 
-
-
                         <h7 class="text"> 제목검색</h7>
                                 <input title="검색" name="keyword" type="text">
                                 &nbsp
@@ -56,19 +54,22 @@
                                 <th scope="col">작성자</th>
                                 <th scope="col">제목</th>
                                 <th scope="col">작성일</th>
+                                <th scope="col">수정일</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr th:each="notice : ${notice}">
                                 <td th:text="${notice.noticeNumber}"></td>
                                 <td th:text="${notice.noticeWriter}"></td>
-                                <td><a th:href="@{/notice/noticeread/{noticeNumber}(noticeNumber=${notice.noticeNumber})}"
-                                       th:text="${notice.noticeTitle}"></a></td>
+                                <td><a th:text="${notice.noticeTitle}"
+                                       th:href="@{/notice/noticeread(noticeNumber=${notice.noticeNumber})}"></a></td>
                                 <td th:text="${#temporals.format(notice.noticeRegDate, 'yyyy-MM-dd')}"></td>
+                                <td th:text="${#temporals.format(notice.noticeUpdateDate, 'yyyy-MM-dd')}"></td>
                             </tr>
                             </tbody>
                         </table>
                         <!-- End Table with hoverable rows -->
+
                         <!-- Centered Pagination -->
                         <nav aria-label="Page navigation example">
                             <ul class="pagination justify-content-center">
@@ -100,7 +101,8 @@
                         <button type="button" class="btn btn-primary btn-sm">검색</button>
                         &nbsp
 
-                        <a href="/deptnotice/deptnoticeregister" class="deptregister"><button type="button" class="btn btn-primary btn-sm">글쓰기</button></a>
+                        <a href="/deptnotice/deptnoticeregister" class="deptregister">
+                            <button type="button" class="btn btn-primary btn-sm">글쓰기</button></a>
                         &nbsp
 
                         <!-- Table with hoverable rows -->
@@ -111,19 +113,22 @@
                                 <th scope="col">작성자</th>
                                 <th scope="col">제목</th>
                                 <th scope="col">작성일</th>
+                                <th scope="col">수정일</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr th:each="deptnotice : ${deptnotice}">
                                 <td th:text="${deptnotice.deptNoticeNumber}"></td>
                                 <td th:text="${deptnotice.deptNoticeWriter}"></td>
-                                <td><a th:href="@{/deptnotice/deptnoticeread/{deptNoticeNumber}(deptNoticeNumber=${deptnotice.deptNoticeNumber})}"
-                                       th:text="${deptnotice.deptNoticeTitle}"></a></td>
+                                <td><a th:text="${deptnotice.deptNoticeTitle}"
+                                       th:href="@{/deptnotice/deptnoticeread(deptNoticeNumber=${deptnotice.deptNoticeNumber})}"></a></td>
                                 <td th:text="${#temporals.format(deptnotice.deptNoticeRegDate, 'yyyy-MM-dd')}"></td>
+                                <td th:text="${#temporals.format(deptnotice.deptNoticeUpdateDate, 'yyyy-MM-dd')}"></td>
                             </tr>
                             </tbody>
                         </table>
                         <!-- End Table with hoverable rows -->
+
                         <!-- Centered Pagination -->
                         <nav aria-label="Page navigation example">
                             <ul class="pagination justify-content-center">

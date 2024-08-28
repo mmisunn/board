@@ -5,7 +5,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import site.junggam.procurement_system.entity.DeptNotice;
@@ -19,15 +18,8 @@ public class DeptNoticeController {
 
     private final DeptNoticeService deptNoticeService;
 
-//    @GetMapping("/noticelist")
-//    public String deptnoticelist(Model model) {
-//        log.info("부서 알림 목록");
-//        model.addAttribute("deptnotice", deptNoticeService.list());
-//        return "notice/noticelist";
-//    }
-
-    @GetMapping("/deptnoticeread/{deptNoticeNumber}")
-    public String deptnoticeread(@PathVariable int deptNoticeNumber, Model model) {
+    @GetMapping("/deptnoticeread")
+    public String deptnoticeread(Integer deptNoticeNumber, Model model) {
         log.info("부서 알림 상세보기");
         model.addAttribute("deptnotice", deptNoticeService.read(deptNoticeNumber));
         return "deptnotice/deptnoticeread";
@@ -41,27 +33,37 @@ public class DeptNoticeController {
 
     @PostMapping("/deptnoticeregister")
     public String deptregisterpost(DeptNotice deptNotice) {
+        log.info("부서 알림 등록 post");
         deptNoticeService.register(deptNotice);
         return "redirect:/notice/noticelist";
     }
 
-    @GetMapping("/deptnoticemodify/{deptNoticeNumber}")
-    public String deptnoticemodify(@PathVariable int deptNoticeNumber, Model model) {
+    @GetMapping("/deptnoticemodify")
+    public String deptnoticemodify(Integer deptNoticeNumber, Model model) {
         log.info("부서 알림 수정");
         model.addAttribute("deptnotice", deptNoticeService.read(deptNoticeNumber));
         return "deptnotice/deptnoticemodify";
     }
 
     @PostMapping("/deptnoticemodify")
-    public String deptmodifypost(DeptNotice deptNotice) {
-        deptNoticeService.modify(deptNotice);
+    public String deptmodifypost(Integer deptNoticeNumber, DeptNotice deptNotice) {
+        log.info("부서 알림 수정 post");
+        DeptNotice deptNoticeTemp = deptNoticeService.read(deptNoticeNumber);
+        deptNoticeTemp.setDeptNoticeNumber(deptNotice.getDeptNoticeNumber());
+        deptNoticeTemp.setDeptNoticeWriter(deptNotice.getDeptNoticeWriter());
+        deptNoticeTemp.setDeptNoticeTitle(deptNotice.getDeptNoticeTitle());
+        deptNoticeTemp.setDeptNoticeRegDate(deptNotice.getDeptNoticeRegDate());
+        deptNoticeTemp.setDeptNoticeContent(deptNotice.getDeptNoticeContent());
+        deptNoticeTemp.setDeptNoticeUpdateDate(deptNotice.getDeptNoticeUpdateDate());
+        deptNoticeService.register(deptNoticeTemp);
         return "redirect:/notice/noticelist";
     }
 
-    @GetMapping("/deptnoticedelete/{deptNoticeNumber}")
-    public String deptnoticedelete(@PathVariable int deptNoticeNumber) {
+    @GetMapping("/deptnoticedelete")
+    public String deptnoticedelete(Integer deptNoticeNumber) {
+        log.info("부서 알림 삭제");
         deptNoticeService.delete(deptNoticeNumber);
-        return "notice/noticelist";
+        return "redirect:/notice/noticelist";
     }
 
 

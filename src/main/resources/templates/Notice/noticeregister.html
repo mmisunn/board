@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>공지사항등록</title>
+    <title>공지사항 등록</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -16,10 +16,10 @@
 <!-- ======= main ======= -->
 <main id="main" class="main">
     <div class="pagetitle">
-        <h1>전체 공지사항</h1>
+        <h1>공지사항</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">메인</a></li>
+                <li class="breadcrumb-item">메인</li>
                 <li class="breadcrumb-item">공지사항</li>
             </ol>
         </nav>
@@ -33,16 +33,10 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">등록</h5>
+                        <h5 class="card-title">공지사항 등록</h5>
 
                         <!-- General Form Elements -->
                         <form action="noticeregister" method="post">
-<!--                            <div class="row mb-3">-->
-<!--                                <label class="col-sm-2 col-form-label">번호</label>-->
-<!--                                <div class="col-sm-10">-->
-<!--                                    <input type="text" class="form-control" name="noticeNumber" >-->
-<!--                                </div>-->
-<!--                            </div>-->
 
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label">작성자</label>
@@ -61,7 +55,7 @@
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label">작성일</label>
                                     <div class="col-sm-10">
-                                        <input type="date" class="form-control" name="noticeRegDate">
+                                        <input type="date" class="form-control" name="noticeRegDate" id="currentDate">
                                     </div>
                                 </div>
 
@@ -71,7 +65,7 @@
 
                                         <div class="card">
                                             <div class="card-body">
-                                    <textarea class="tinymce-editor" name="noticeContent"></textarea>
+                                            <textarea class="tinymce-editor" name="noticeContent" id="text1"></textarea>
                                             </div>
                                         </div>
 
@@ -84,26 +78,17 @@
 
                 </div>
 
-<!--                <div class="col-lg-12">-->
-
-<!--                    <div class="card">-->
-<!--                        <div class="card-body">-->
-<!--                            <h5 class="card-title"></h5>-->
-
-<!--                            &lt;!&ndash; TinyMCE Editor &ndash;&gt;-->
-<!--                            <textarea class="tinymce-editor" name="noticeContent">-->
-<!--                            </textarea>&lt;!&ndash; End TinyMCE Editor &ndash;&gt;-->
-
-<!--                        </div>-->
-<!--                    </div>-->
-
-<!--                </div>-->
-<!--                <div class="row mb-12">-->
-<!--                    <div class="col-sm-10">-->
-<!--                        <button type="submit" class="btn btn-primary">등록</button>-->
-<!--                    </div>-->
-<!--                </div>-->
                 <!-- End General Form Elements -->
+
+                <script>
+                    document.getElementById('currentDate').value = new Date().toISOString().substring(0, 10);;
+                </script>
+
+                <script>
+                    const $el = document.querySelector(".tinymce-editor");
+
+                    const newText = $el.innerHTML.replace(/<[^>]*>?/g, '');
+                </script>
 
             </div>
         </div>

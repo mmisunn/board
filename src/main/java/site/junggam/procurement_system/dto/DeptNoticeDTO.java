@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -19,6 +18,8 @@ public class DeptNoticeDTO {
     private String deptNoticeContent;
 
     private LocalDate deptNoticeRegDate;
+
+    private LocalDate deptNoticeUpdateDate;
 
     private Integer deptNoticeNumber;
 

@@ -25,15 +25,15 @@ public class DeptNoticeService {
         return deptNoticeRepository.findAll(Sort.by(Sort.Direction.DESC, "deptNoticeNumber"));
     }
 
-    public DeptNotice read(int deptNoticeNumber) {
-        return deptNoticeRepository.findById(deptNoticeNumber).orElse(null);
+    public DeptNotice read(Integer deptNoticeNumber) {
+        return deptNoticeRepository.findById(deptNoticeNumber).get();
     }
 
     public void modify(DeptNotice deptNotice) {
         deptNoticeRepository.save(deptNotice);
     }
 
-    public void delete(int deptNoticeNumber) {
+    public void delete(Integer deptNoticeNumber) {
         deptNoticeRepository.deleteById(deptNoticeNumber);
     }
 

@@ -2,11 +2,8 @@ package site.junggam.procurement_system.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tbl_notice_board")
@@ -29,11 +26,8 @@ public class Notice {
 
     private String noticeWriter;
 
-//    @CreationTimestamp
-//    @Column(updatable = false)
     private LocalDate noticeRegDate;
 
-    @UpdateTimestamp
-    private LocalDateTime updateDate;
+    private LocalDate noticeUpdateDate;
 
 }
